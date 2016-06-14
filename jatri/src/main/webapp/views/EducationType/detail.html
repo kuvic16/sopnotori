@@ -1,0 +1,253 @@
+<div class="row" style="margin-top: 10px">
+	<div class="col-md-12">
+		<form id="EducationTypeForm" name="EducationTypeForm" class="form-horizontal" role="form">
+			<div class="panel panel-green">
+				<div class="panel-heading" ng-switch
+					on="$location.path().indexOf('/EducationType/new') > -1">
+
+					<div ng-switch-when="true">Create a new Education Type</div>
+					<div ng-switch-when="false">View or edit Education Type</div>
+				</div>
+				<div class="panel-body">
+					<div class="col-md-3">
+
+						<div class="form-group" ng-class="{'has-error': EducationTypeForm.name.$invalid}">
+							<label for="name" class="control-label">Name</label>
+							<div id="nameControls" class="">
+								<input 	id="name" 
+										name="name" 
+										required 
+										ng-maxlength="50"
+										ng-minlength="1" 
+										class="form-control" 
+										type="text"
+										ng-model="educationType.name" 
+										placeholder="Enter the Name"> 
+								<span 	class="help-block error"
+										ng-show="EducationTypeForm.name.$error.minlength">
+										minimum length is 1 
+								</span> 
+								<span 	class="help-block error"
+										ng-show="EducationTypeForm.name.$error.maxlength">
+										maximum length is 50 
+								</span>
+							</div>
+						</div>
+						
+						<div class="form-group" ng-class="{'has-error': EducationTypeForm.code.$invalid}">
+							<label for="code" class="control-label">Code</label>
+							<div id="codeControls" class="control-label">
+								<input 	id="code"
+										 
+										name="code" 
+										ng-minlength="1" 
+										ng-maxlength="20" 
+										class="form-control" 
+										type="text"
+										ng-model="educationType.code" 
+										placeholder="Enter the code"/>
+							</div>
+							<span 	class="help-block error" ng-show="EducationTypeForm.code.$error.minlength">
+											minimum length is 1 </span> 
+							<span 	class="help-block error"
+											ng-show="EducationTypeForm.code.$error.maxlength">
+											maximum length is 20 </span>
+							
+						</div>
+						
+						
+						<div class="form-group" ng-class="{'has-error': EducationTypeForm.scale.$invalid}">
+							<label for="scale" class="control-label">Scale</label>
+							<div id="scaleControls" class="">
+								<input 	id="scale"
+										required 
+										name="scale" 
+										min=0
+										max=5
+										ng-minlength="0" 
+										ng-maxlength="1" 
+										class="form-control" 
+										type="number"
+										ng-model="educationType.scale" 
+										placeholder="Enter the Scale"/>
+										
+							<span 	class="help-block error"
+											ng-show="EducationTypeForm.scale.$error.minlength">
+											minimum scale value is 0 </span> 
+							<span 	class="help-block error"
+											ng-show="EducationTypeForm.scale.$error.maxlength">
+											maximum scale value is 5 </span>
+							</div>
+						</div>
+
+						<div class="form-group" ng-class="{'has-error': EducationTypeForm.description.$invalid}">
+							<label for="description" class="control-label">Description</label>
+							<div id="descriptionControls" class="">
+								<textarea 	id="description" 
+											name="description"
+											ng-maxlength="500" 
+											ng-minlength="0" 
+											class="form-control"
+											ng-model="educationType.description"
+											placeholder="Enter the Description"></textarea>
+											
+									<span 	class="help-block error"
+											ng-show="EducationTypeForm.description.$error.minlength">
+											minimum length is 0 </span> 
+									<span 	class="help-block error"
+											ng-show="EducationTypeForm.description.$error.maxlength">
+											maximum length is 500 </span>
+							</div>
+						</div>
+
+						
+
+					</div>
+					
+					
+					<div class="col-md-5">
+						<label for="gradingPoint" class="control-label">Grading Point</label>
+						<!-- <button class="btn btn-default btn-xs" type="button" style="float: right;">
+                        	<span aria-hidden="true" class="glyphicon glyphicon-plus"></span> 
+                        	Add
+                        </button> -->
+						
+						<table id="dataTables-example" style=""
+							class="table table-striped table-bordered table-hover dataTable no-footer table-condensed"
+							role="grid" aria-describedby="dataTables-example_info">
+							<thead>
+								<tr role="row" style="font-size: 12px">
+									<th>Letter Grade</th>
+									<th>Min. Mark</th>
+									<th>Max. Mark</th>
+									<th>Point</th>
+									<!-- <th style="width: 82px; text-align: center;">
+										Action
+									</th> -->
+								</tr>
+							</thead>
+							<tbody>
+								<tr role="row" ng-repeat="gradePoint in gradePointList">
+									<td>
+										<select name="letterGrade" class="form-control input-sm gp-textbox">
+											<option value="">--Select Letter Grade--</option>
+											<option ng-selected="gradePoint.letterGrade == 'A+'" value="A+">A+</option>
+											<option ng-selected="gradePoint.letterGrade == 'A'" value="A">A</option>
+											<option ng-selected="gradePoint.letterGrade == 'A-'" value="A-">A-</option>
+											<option ng-selected="gradePoint.letterGrade == 'B+'" value="B+">B+</option>
+											<option ng-selected="gradePoint.letterGrade == 'B'" value="B">B</option>
+											<option ng-selected="gradePoint.letterGrade == 'B-'" value="B-">B-</option>
+											<option ng-selected="gradePoint.letterGrade == 'C+'" value="C+">C+</option>
+											<option ng-selected="gradePoint.letterGrade == 'C'" value="C">C</option>
+											<option ng-selected="gradePoint.letterGrade == 'C-'" value="C-">C-</option>
+											<option ng-selected="gradePoint.letterGrade == 'D+'" value="D+">D+</option>
+											<option ng-selected="gradePoint.letterGrade == 'D'" value="D">D</option>
+											<option ng-selected="gradePoint.letterGrade == 'D-'" value="D-">D-</option>
+											<option ng-selected="gradePoint.letterGrade == 'F'" value="F">F</option>
+									</select> 									
+									</td>
+										
+									<td>
+										<input value="{{gradePoint.minMark}}" class="form-control input-sm gp-textbox" type="text"></input>
+									</td>
+
+									<td>
+										<input value="{{gradePoint.maxMark}}" class="form-control input-sm gp-textbox" type="text"></input>
+									</td>
+
+									<td>
+										<input value="{{gradePoint.point}}" class="form-control input-sm gp-textbox" type="text"></input>
+									</td>
+
+
+									<!-- <td>
+										<button class="btn btn-default btn-xs" type="button">
+	                        				<span aria-hidden="true" class="glyphicon glyphicon-pencil"></span>
+	                        			</button>
+	                        			<button class="btn btn-default btn-xs" type="button">
+	                        				<span aria-hidden="true" class="glyphicon glyphicon-trash"></span>
+	                        			</button>
+									</td> -->
+								</tr>
+							</tbody>
+						</table>						
+					</div>
+					
+					<div class="col-md-4">
+						<label for="grade" class="control-label">Grade</label>
+						<div ng-repeat="grade in gradeList">
+							<label  style="margin-right: 15px; font-style: normal; font-weight: 100;"> 
+								<input type="checkbox" data-checklist-model="selectedGrade.grade" data-checklist-value="grade" />
+								{{grade.name}}
+							</label>
+						</div>
+					</div>
+					
+				</div> <!-- End of body div -->
+				
+				<!-- ============================================================================================== -->
+				
+				<div class="panel-footer">
+					<div class="form-group">
+						<div class="col-sm-10">
+							<button 
+								id="saveEducationType" 
+								name="saveEducationType"
+								ng-disabled="EducationTypeForm.$invalid"
+								class="btn btn-primary"
+								ng-click="save()">
+								<span class="glyphicon glyphicon-ok-sign"> </span> Save
+							</button>
+
+							<button id="cancel" name="cancel" class="btn btn-default"
+								onclick="return false;" ng-click="cancel()">
+
+								<span class="glyphicon glyphicon-remove-sign"> </span> Cancel
+							</button>
+
+							<button id="deleteEducationType" name="deleteEducationType"
+								class="btn btn-danger" ng-show="EducationType.id"
+								ng-click="remove(EducationType.id)">
+								<span class="glyphicon glyphicon-trash"> </span> Delete
+							</button>
+						</div>
+					</div>
+
+					<div ng-show="displayError" class="alert alert-danger">
+						<strong>Error!</strong> Something broke. Retry, or cancel and
+						start afresh.
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript">
+//======================================================================
+//Prevent enterkey press action
+$("#EducationTypeForm" ).keypress(function(event) {
+	if (event.which == 13 ) {
+		     event.preventDefault(); 
+	  }
+});
+//=======================================================================
+
+    $('.datePicker').datepicker({
+        autoclose: true,
+        format: "yyyy-mm-dd",
+        todayHighlight: true,
+        orientation: "top auto"
+    });
+
+    $('.yearPicker').datepicker({
+        autoclose: true,
+        format: "yyyy",
+        todayHighlight: true,
+        orientation: "top auto",
+        minViewMode: 2
+    });
+
+    $(".gp-textbox").attr('disabled', 'disabled');
+    $(".gp-textbox").addClass("view-mode");
+</script>

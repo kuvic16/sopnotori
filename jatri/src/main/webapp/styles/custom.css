@@ -1,0 +1,160 @@
+.row {
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+}
+/* Breadcrumb design */
+.Breadcrumb {
+	margin-top: 10px;
+	margin-bottom: 0px;
+	padding-left: 30px;
+	list-style: none;
+	overflow: hidden;
+	font: 12px Helvetica, Arial, Sans-Serif;
+}
+
+.Breadcrumb li {
+	float: left;
+}
+
+.Breadcrumb li a {
+	color: white;
+	text-decoration: none;
+	padding: 10px 0 10px 55px;
+	background: brown; /* fallback color */
+	background: hsla(34, 85%, 35%, 1);
+	position: relative;
+	display: block;
+	float: left;
+}
+
+.Breadcrumb li a:after {
+	content: " ";
+	display: block;
+	width: 0;
+	height: 0;
+	border-top: 50px solid transparent;
+	/* Go big on the size, and let overflow hide */
+	border-bottom: 50px solid transparent;
+	border-left: 30px solid hsla(34, 85%, 35%, 1);
+	position: absolute;
+	top: 50%;
+	margin-top: -50px;
+	left: 100%;
+	z-index: 2;
+}
+
+.Breadcrumb li a:before {
+	content: " ";
+	display: block;
+	width: 0;
+	height: 0;
+	border-top: 50px solid transparent;
+	/* Go big on the size, and let overflow hide */
+	border-bottom: 50px solid transparent;
+	border-left: 30px solid white;
+	position: absolute;
+	top: 50%;
+	margin-top: -50px;
+	margin-left: 1px;
+	left: 100%;
+	z-index: 1;
+}
+
+.Breadcrumb li:first-child a {
+	padding-left: 10px;
+}
+
+.Breadcrumb li:nth-child(2) a {
+	background: hsla(34, 85%, 45%, 1);
+}
+
+.Breadcrumb li:nth-child(2) a:after {
+	border-left-color: hsla(34, 85%, 45%, 1);
+}
+
+.Breadcrumb li:nth-child(3) a {
+	background: hsla(34, 85%, 55%, 1);
+}
+
+.Breadcrumb li:nth-child(3) a:after {
+	border-left-color: hsla(34, 85%, 55%, 1);
+}
+
+.Breadcrumb li:nth-child(4) a {
+	background: hsla(34, 85%, 65%, 1);
+}
+
+.Breadcrumb li:nth-child(4) a:after {
+	border-left-color: hsla(34, 85%, 65%, 1);
+}
+
+.Breadcrumb li:nth-child(5) a {
+	background: hsla(34, 85%, 75%, 1);
+}
+
+.Breadcrumb li:nth-child(5) a:after {
+	border-left-color: hsla(34, 85%, 75%, 1);
+}
+
+/* .Breadcrumb li:last-child a {
+	background: transparent !important;
+	color: black;
+	pointer-events: none;
+	cursor: default;
+	border-left-color: hsla(34, 85%, 75%, 1);
+}
+
+.Breadcrumb li:last-child a:after {
+	border: 0;
+	border-left-color: hsla(34, 85%, 75%, 1);
+} */
+.Breadcrumb li a:hover {
+	background: hsla(34, 85%, 25%, 1);
+}
+
+.Breadcrumb li a:hover:after {
+	border-left-color: hsla(34, 85%, 25%, 1) !important;
+}
+
+#emisLoader {
+	background-color: rgba(255, 255, 255, .7);
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: none;
+    z-index: 999;
+}
+
+#emisLoader img{
+	left: 50%;
+    position: fixed;
+    top: 50%;
+    margin-top: -64px;
+    margin-left: -64px;
+}
+.confirmation-modal{
+	padding-top: 15% !important;
+}
+.form-horizontal .control-label{
+/* text-align:right; */
+text-align:left !important;
+
+}
+select:invalid, textarea.invalid{
+	/* border: 2px solid #A94442; */
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button{ 
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    margin: 0 !important; 
+}
+
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+

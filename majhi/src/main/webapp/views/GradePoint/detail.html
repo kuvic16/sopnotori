@@ -1,0 +1,216 @@
+<div class="row" style="margin-top: 10px">
+    <div class="col-sm-12">
+        <form id="GradePointForm" class="form-horizontal" name="GradePointForm" role="form">
+            <div class="panel panel-green">
+                <div class="panel-heading"
+                     ng-switch
+                     on="$location.path().indexOf('/GradePoint/new') > -1">
+
+                    <div ng-switch-when="true">Create a new Grade Point</div>
+                    <div ng-switch-when="false">View or edit Grade Point</div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="row">
+
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{'has-error': GradePointForm.educationTypeId.$invalid}">
+                                    <label for="educationTypeId" class="control-label">Education Type</label>
+                                    <div class="col-sm-12 clearPaddingLeft">
+                                        <select id="educationTypeId" name="educationTypeId" ng-model="gradePoint.educationTypeId" class="form-control">
+                                            <option value="">--Select Education Type--</option>
+                                            <option ng-selected="gradePoint.educationTypeId == educationType.id"
+                                                    ng-repeat="educationType in educationTypeList"
+                                                    value="{{educationType.id}}">{{educationType.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{'has-error': GradePointForm.letterGrade.$invalid}">
+                                    <label for="letterGrade" class="control-label">Letter Grade</label>
+                                    <div class="col-sm-12 clearPaddingLeft">
+                                        <select id="letterGrade" name="letterGrade" ng-model="gradePoint.letterGrade" required="required" class="form-control">
+                                            <option value="">--Select Letter Grade--</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A">A</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="B-">B-</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="C-">C-</option>
+                                            <option value="D+">D+</option>
+                                            <option value="D">D</option>
+                                            <option value="D-">D-</option>
+                                            <option value="F">F</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{'has-error': GradePointForm.minMark.$invalid}">
+                                    <label for="minMark" class="control-label">Minimum Mark</label>
+                                    <div class="col-sm-12 clearPaddingLeft">
+                                        <input
+                                                id="minMark"
+                                                required="required"
+                                                name="minMark"
+                                                type="text"
+                                                maxlength="4"
+                                                class="form-control"
+                                                ng-model="gradePoint.minMark"
+                                                placeholder="Enter the Minimum Mark"></div>
+									<span class="help-block error" ng-show="GradePointForm.minMark.$error.minlength">
+										minimum value can be 0 
+									</span> 
+									<span class="help-block error" ng-show="GradePointForm.minMark.$error.maxlength">
+									 	maximum value can be 100 
+									 </span>
+									 
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+                        <div class="row">
+
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{'has-error': GradePointForm.maxMark.$invalid}">
+                                    <label for="maxMark" class="control-label">Maximum Mark</label>
+                                    <div class="col-sm-12 clearPaddingLeft">
+                                        <input  id="maxMark"
+                                                required="required"
+                                                name="maxMark"
+                                                maxlength="4"
+                                                type="text"
+                                                class="form-control"
+                                                ng-model="gradePoint.maxMark"
+                                                placeholder="Enter the Maximum Mark"></div>
+									<span class="help-block error" ng-show="GradePointForm.maxMark.$error.minlength">
+										minimum value can be 0 
+									</span> 
+									<span class="help-block error" ng-show="GradePointForm.maxMark.$error.maxlength">
+									 	maximum value can be 100 
+									 </span>
+									 
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-class="{'has-error': GradePointForm.point.$invalid}">
+                                    <label for="point" class="control-label">Point</label>
+                                    <div class="col-sm-12 clearPaddingLeft">
+                                        <input  id="point"
+                                                name="point"
+                                                maxlength="4"
+                                                type="text"
+                                                required="required"
+                                                class="form-control"
+                                                ng-model="gradePoint.point"
+                                                placeholder="Enter the Point"></div>
+											
+									<span class="help-block error" ng-show="GradePointForm.point.$error.minlength">
+										minimum value can be 0 
+									</span> 
+									<span class="help-block error" ng-show="GradePointForm.point.$error.maxlength">
+									 	maximum value can be 5 
+									 </span>
+									 
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button
+                                    id="saveGradePoint"
+                                    name="saveGradePoint"
+                                    class="btn btn-primary"
+                                    ng-disabled="isClean() || GradePointForm.$invalid"
+                                    ng-click="save()">
+									<span class="glyphicon glyphicon-ok-sign"></span>
+                                Save
+                            </button>
+
+                            <button
+                                    id="cancel"
+                                    name="cancel"
+                                    class="btn btn-default"
+                                    onclick="return false;"
+                                    ng-click="cancel()">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                Cancel
+                            </button>
+
+                            <button
+                                    id="deleteGradePoint"
+                                    name="deleteGradePoint"
+                                    class="btn btn-danger"
+                                    ng-show="gradePoint.id"
+                                    ng-click="remove(gradePoint.letterGrade)">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+
+                    <div ng-show="displayError" class="alert alert-danger">
+                        <strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    //======================================================================
+    // Prevent enterkey press action
+    $("#GradePointForm").keypress(function (event) {
+        if (event.which == 13) {
+            event.preventDefault();
+        }
+    });
+
+    $(document).ready(function() {
+        $("#minMark, #maxMark, #point").keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                    // Allow: Ctrl+A, Command+A
+                    (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) ||
+                    // Allow: home, end, left, right, down, up
+                    (e.keyCode >= 35 && e.keyCode <= 40)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
+    });
+
+   /* $( "#minMark" ).validate({
+        rules: {
+            field: {
+                required: true,
+                max: 100,
+                min: 0
+            }
+        }
+    });*/
+    //=======================================================================
+</script>

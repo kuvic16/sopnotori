@@ -1,0 +1,74 @@
+<div class="row" style="margin-top: 10px">
+	<div class="col-lg-12">
+		<form id="GradingSystemForm" name="GradingSystemForm" class="form-horizontal"
+			role="form">
+			<div class="panel panel-green">
+				<div class="panel-heading" ng-switch
+					on="$location.path().indexOf('/GradingSystem/new') > -1">
+					<div ng-switch-when="true">Create a new Grading System</div>
+					<div ng-switch-when="false">View or edit Grading System</div>
+				</div>
+				<div class="panel-body">
+					<div class="col-lg-4">
+					
+						<div class="form-group"
+							ng-class="{'has-error': GradingSystemForm.name.$invalid}">
+							<label for="name" class="control-label">Name</label>
+							<div id="nameControls" class="">
+								<input id="name" name="name" type="text" required
+									ng-maxlength="10" ng-minlength="1" class="form-control"
+									ng-model="grading_system.name" placeholder="Enter the Grading System"></input>
+								<span class="help-block error"
+									ng-show="GradingSystemForm.name.$error.required">required</span> 
+								<span
+									class="help-block error"
+									ng-show="GradingSystemForm.name.$error.minlength">minimum length
+									is 1</span> 
+								<span class="help-block error"
+									ng-show="GradingSystemForm.name.$error.maxlength">maximum length
+									is 10</span>
+							</div>
+						</div>
+
+						<div class="form-group"
+							ng-class="{'has-error': GradingSystemForm.scale.$invalid}">
+							<label for="scale" class="control-label">Scale</label>
+							<div id="scaleControls" class="">
+								<input id="scale" name="scale" type="text" required
+									class="form-control"
+									ng-model="grading_system.scale"
+									placeholder="Enter the scale"></input> <span
+									class="help-block error"
+									ng-show="GradingSystemForm.scale.$error.required">required</span>
+							</div>
+						</div>
+						
+				</div>
+				
+			</div>
+				<div class="panel-footer">
+					<div class="form-group">
+						<div class="col-sm-10">
+							<button id="saveOrganization" name="saveOrganization" class="btn btn-primary"
+								ng-disabled="isClean() || GradingSystemForm.$invalid" ng-click="save()">
+								<span class="glyphicon glyphicon-ok-sign"></span> Save
+							</button>
+							<button id="cancel" name="cancel" class="btn btn-default" onclick="return false;"
+								ng-click="cancel()">
+								<span class="glyphicon glyphicon-remove-sign"></span> Cancel
+							</button>
+							<button id="deleteGradingSystem" name="deleteGradingSystem"
+								class="btn btn-danger" ng-show="grading_system.id"
+								ng-click="remove(grading_system.name)">
+								<span class="glyphicon glyphicon-trash"></span> Delete
+							</button>
+						</div>
+					</div>
+					<div ng-show="displayError" class="alert alert-danger">
+						<strong>Error!</strong> Something broke. Retry, or cancel and
+						start afresh.
+					</div>
+				</div>
+		</form>
+	</div>
+</div>

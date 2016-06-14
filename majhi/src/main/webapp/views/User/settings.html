@@ -1,0 +1,225 @@
+
+<form id="UserForm" name="UserForm" class="form-horizontal" role="form"
+	autocomplete="off" novalidate>
+	<div class="panel panel-green">
+		<div class="panel-heading">
+			<div>Settings</div>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group"
+						ng-class="{'has-error': UserForm.firstName.$invalid}">
+						<label for="firstName" class="control-label">First Name</label>
+						<div id="firstNameControls" class="col-sm-12 clearPaddingLeft">
+							<input id="firstName" name="firstName" type="text"
+								ng-maxlength="50" ng-minlength="1" class="form-control"
+								ng-model="user.firstName"></input>
+	
+							<span class="help-block error"
+								ng-show="UserForm.firstName.$error.minlength"> minimum
+								length is 1 </span> <span class="help-block error"
+								ng-show="UserForm.firstName.$error.maxlength"> maximum
+								length is 50 </span>
+						</div>
+	
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group"
+						ng-class="{'has-error': UserForm.middleName.$invalid}">
+						<label for="middleName" class="control-label">Middle Name</label>
+						<div id="middleNameControls" class="col-sm-12 clearPaddingLeft">
+							<input id="middleName" name="middleName" type="text"
+								ng-maxlength="50" ng-minlength="0" class="form-control"
+								ng-model="user.middleName"></input>
+	
+							<span class="help-block error"
+								ng-show="UserForm.middleName.$error.minlength"> minimum
+								length is 0 </span> <span class="help-block error"
+								ng-show="UserForm.middleName.$error.maxlength"> maximum
+								length is 50 </span>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group"
+						ng-class="{'has-error': UserForm.lastName.$invalid}">
+						<label for="lastName" class="control-label">Last Name</label>
+						<div id="lastNameControls" class="col-sm-12 clearPaddingLeft">
+							<input id="lastName" name="lastName" type="text" ng-maxlength="50"
+								ng-minlength="0" class="form-control" ng-model="user.lastName"></input> <span
+								class="help-block error"
+								ng-show="UserForm.lastName.$error.minlength"> minimum
+								length is 0 </span> <span class="help-block error"
+								ng-show="UserForm.lastName.$error.maxlength"> maximum
+								length is 50 </span>
+						</div>
+					</div>
+				</div>				
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group"
+						ng-class="{'has-error': UserForm.email.$invalid}">
+						<label for="email" class="control-label">Email</label>
+						<div id="emailControls" class="col-sm-12 clearPaddingLeft">
+							<input id="email" name="email" type="email" ng-maxlength="50"
+								ng-minlength="0" class="form-control" ng-model="user.email"
+								></input> <span
+								class="help-block error"
+								ng-show="UserForm.email.$error.minlength">minimum length
+								is 0 </span> <span class="help-block error"
+								ng-show="UserForm.email.$error.maxlength">maximum length
+								is 50 </span>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group"
+						ng-class="{'has-error': UserForm.password.$invalid}">
+						<label for="password" class="control-label">Password</label>
+						<div id="passwordControls" class="col-sm-12 clearPaddingLeft">
+							<input id="password" name="password" type="text"
+								ng-disabled="usernameAndPasswordFieldEnable" required
+								ng-maxlength="20" ng-minlength="6" class="form-control"
+								ng-model="user.password" ></input>
+							<span class="help-block error"
+								ng-show="UserForm.password.$error.minlength">minimum
+								length is 6 </span> <span class="help-block error"
+								ng-show="UserForm.password.$error.maxlength">maximum
+								length is 20 </span>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group"
+						ng-class="{'has-error': UserForm.designationUdvId.$invalid}">
+						<label for="designationUdvId" class="control-label">Designation</label>
+						<div id="designationUdvIdControls"
+							class="col-sm-12 clearPaddingLeft">
+							<select name="designationUdvId" ng-model="user.designationUdvId"
+								class="form-control">
+								<option value="">--Select User Designation--</option>
+								<option ng-selected="user.designationUdvId == udv.id"
+									ng-repeat="udv in udvList | filter:udv.category='Designation'"
+									value="{{udv.id}}">{{udv.value}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group"
+						ng-class="{'has-error': UserForm.dateOfBirth.$invalid}">
+						<label for="dateOfBirth" class="control-label">Date of
+							birth</label>
+						<div id="dateOfBirthControls" class="col-sm-12 clearPaddingLeft">
+							<input id="dateOfBirth" name="dateOfBirth" readonly="readonly"
+								type="text" class="form-control datePicker"
+								ng-model="user.dateOfBirth" ></input>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group"
+						ng-class="{'has-error': UserForm.gender.$invalid}">
+						<label for="gender" class="control-label">Gender</label>
+						<div id="genderControls" class="col-sm-12 clearPaddingLeft">
+							<select name="gender" ng-model="user.gender" class="form-control">
+								<option value="">--Select Gender--</option>
+								<option value="M">Male</option>
+								<option value="F">Female</option>
+								<option value="O">Other</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group"
+						ng-class="{'has-error': UserForm.mobileNumber.$invalid}">
+						<label for="mobileNumber" class="control-label">Mobile
+							Number</label>
+						<div id="mobileNumberControls" class="col-sm-12 clearPaddingLeft">
+							<input id="mobileNumber" name="mobileNumber" type="text"
+								ng-maxlength="20" ng-minlength="0"
+								ng-pattern="{{validation.phoneNumber}}" class="form-control"
+								ng-model="user.mobileNumber"
+								></input> <span
+								class="help-block error"
+								ng-show="UserForm.mobileNumber.$error.minlength"> minimum
+								length is 0 </span> <span class="help-block error"
+								ng-show="UserForm.mobileNumber.$error.pattern"> Only
+								number[0-9] , and - space are allowed. </span> <span
+								class="help-block error"
+								ng-show="UserForm.mobileNumber.$error.maxlength"> maximum
+								length is 20 </span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group"
+						ng-class="{'has-error': UserForm.staffGrageUdvId.$invalid}">
+						<label for="staffGrageUdvId" class="control-label">Staff
+							Grade</label>
+						<div id="staffGrageUdvIdControls"
+							class="col-sm-12 clearPaddingLeft">
+							<select name="staffGrageUdvId" ng-model="user.staffGrageUdvId"
+								class="form-control">
+								<option value="">--Select Staff Grade--</option>
+								<option ng-selected="user.staffGrageUdvId == udv.id"
+									ng-repeat="udv in udvList | filter:udv.category='Staff grade'"
+									value="{{udv.id}}">{{udv.value}}</option>
+							</select>
+						</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+
+		<!--  -->
+		<div class="panel-footer">
+			<div class="form-group">
+				<div class="col-sm-10">
+					<button id="saveUser" name="saveUser" class="btn btn-primary"
+						ng-click="save()">
+						<span class="glyphicon glyphicon-ok-sign"></span> Save
+					</button>
+				</div>
+			</div>
+			<div ng-show="displayError" class="alert alert-danger">
+				<strong>Error!</strong> Something broke. Retry, or cancel and start
+				afresh.
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+//======================================================================
+// Prevent enterkey press action
+$("#UserForm" ).keypress(function(event) {
+	if (event.which == 13 ) {
+		event.preventDefault();			
+	}
+});
+//=======================================================================
+
+    $('.datePicker').datepicker({
+        autoclose: true,
+        format: "yyyy-mm-dd",
+        todayHighlight: true,
+        orientation: "top auto"
+    });
+
+    $('.yearPicker').datepicker({
+        autoclose: true,
+        format: "yyyy",
+        todayHighlight: true,
+        orientation: "top auto",
+        minViewMode: 2
+    });
+</script>
+<script src="scripts/controllers/bracLocation/bracLocationController.js"></script>

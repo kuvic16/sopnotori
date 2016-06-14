@@ -1,0 +1,25 @@
+<div class="row">
+	<div class="col-sm-4">
+		<div class="dataTables_info" id="dataTables-example_info"
+			role="status" aria-live="polite">Showing
+			{{(currentPage*pageSize) + 1}} to {{(currentPage*pageSize) +
+			searchResults.length}} of {{totalSize}} entries</div>
+	</div>
+
+	<div class="col-sm-8">
+		<div class="dataTables_paginate paging_simple_numbers"
+			id="dataTables-example_paginate">
+			<ul class="pagination" style="margin-top: 0px;">
+				<li ng-class="{disabled:currentPage == 0}">
+					<a style="cursor: pointer;" id="prev" ng-click="previous()">Previous</a>
+				</li>
+				<li ng-repeat="n in pageRange" ng-class="{active:currentPage == n}" ng-click="setPage(n)">
+					<a style="cursor: pointer;" ng-bind="n + 1">1</a>
+				</li>
+				<li ng-class="{disabled: currentPage == (maxPage - 1)}">
+					<a style="cursor: pointer;" id="next" ng-click="next()">Next</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

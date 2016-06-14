@@ -1,0 +1,792 @@
+<!-- <ul class="nav nav-tabs">
+	<li class="active"><a href="#basic">Basic</a></li>
+		
+	
+		<li><a href="#fee">Fee</a></li>
+		<li><a href="#history">History</a></li>
+		
+	
+</ul> -->
+
+<!-- <div class="tab-content">
+
+	Start of Basic Content
+	<div id="basic" class="tab-pane fade in active">
+
+		<div class="row" style="margin-top: 10px;">
+
+
+			<div class="col-sm-12"> -->
+				<form id="StudentForm" name="StudentForm" class="form-horizontal" role="form">
+					<div class="panel panel-green">
+						<div class="panel-heading" ng-switch on="$location.path().indexOf('/Student/new') > -1">
+							<div ng-switch-when="true">Create a new Student</div>
+							<div ng-switch-when="false">View or edit Student</div>
+						</div>
+						<div class="panel-body">
+						
+						<div class="row" style="padding-left: 15px; padding-top: 5px; padding-bottom: 0px; background-color: #d9edf7">
+							<div ng-controller="BracLocationController">
+								<braclocation row="2" required="true" name="brac"></braclocation>
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group" ng-class="{'has-error': StudentForm.instituteId.$invalid}">
+									<label for="instituteId" class="control-label">Institute</label>
+									<div id="instituteIdControls" class="col-sm-12 clearPaddingLeft">
+										<select name="instituteId" ng-model="student.instituteId"
+											required="required" class="form-control"
+											ng-disabled="instituteDisable"
+											ng-change="getGradeList(student.instituteId)">
+											<option value="">--Select Institute--</option>
+											<option ng-selected="student.instituteId == insList.id"
+												ng-repeat="insList in instituteList" value="{{insList.id}}">
+												{{insList.name}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group" ng-class="{'has-error': StudentForm.gradeId.$invalid}">
+									<label for="gradeId" class="control-label">Grade</label>
+									<div id="gradeIdControls" class="col-sm-12 clearPaddingLeft">
+										<select name="gradeId" ng-model="student.gradeId"
+											required="required" class="form-control">
+											<option value="">--Select Grade--</option>
+											<option ng-selected="student.gradeId == gdList.id"
+												ng-repeat="gdList in gradeList" value="{{gdList.id}}">
+												{{gdList.name}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+
+				<div class="col-sm-12 well" style="padding-left: 15px; padding-top: 5px; padding-bottom: 0px; background-color: #d9edf7">
+
+					<div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+							<div class="row">
+							
+								<div ng-controller="BracLocationController">
+									<braclocation row="3" required="true" name="brac"></braclocation>
+								</div>
+								
+								<div class="col-sm-3">
+			                    	<div class="form-group" ng-class="{'has-error': StudentForm.instituteId.$invalid}">
+										<label for="instituteId" class="control-label">Institute</label>
+										<div id="instituteIdControls" class="col-sm-12 clearPaddingLeft">
+											<select name="instituteId" ng-model="student.instituteId"
+												required="required" class="form-control"
+												ng-disabled="instituteDisable"
+												ng-change="getGradeList(student.instituteId)">
+												<option value="">--Select Institute--</option>
+												<option ng-selected="student.instituteId == insList.id"
+													ng-repeat="insList in instituteList" value="{{insList.id}}">
+													{{insList.name}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+					
+					<div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="form-group" ng-class="{'has-error': StudentForm.gradeId.$invalid}">
+										<label for="gradeId" class="control-label">Grade</label>
+										<div id="gradeIdControls" class="col-sm-12 clearPaddingLeft">
+											<select name="gradeId" ng-model="student.gradeId"
+												required="required" class="form-control">
+												<option value="">--Select Grade--</option>
+												<option ng-selected="student.gradeId == gdList.id"
+													ng-repeat="gdList in gradeList" value="{{gdList.id}}">
+													{{gdList.name}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
+							<div class="col-sm-3">
+
+								<div class="form-group" ng-class="{'has-error': StudentForm.studentFirstName.$invalid}">
+									<label for="studentFirstName" class="control-label">First
+										Name</label>
+									<div id="studentFirstNameControls"
+										class="col-sm-12 clearPaddingLeft">
+										<input id="studentFirstName" name="studentFirstName"
+											required="required" 
+											ng-maxlength="50" 
+											ng-minlength="1"  
+											class="form-control"
+											type="text" ng-model="student.studentFirstName"
+											placeholder="Enter the First Name"></input> <span
+											class="help-block error"
+											ng-show="StudentForm.studentFirstName.$error.minlength">
+											minimum length is 1 </span> <span class="help-block error"
+											ng-show="StudentForm.studentFirstName.$error.maxlength">
+											maximum length is 50 </span>
+									</div>
+									
+								</div>
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.studentMiddleName.$invalid}">
+									<label for="studentMiddleName" class="control-label">Middle
+										Name</label>
+									<div id="studentMiddleNameControls"
+										class="col-sm-12 clearPaddingLeft">
+										<input id="studentMiddleName" name="studentMiddleName" 
+											ng-maxlength="50" 
+											ng-minlength="0"  class="form-control" type="text"
+											ng-model="student.studentMiddleName"
+											placeholder="Enter the Middle Name"></input> <span
+											class="help-block error"
+											ng-show="StudentForm.studentMiddleName.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.studentMiddleName.$error.maxlength">
+											maximum length is 50 </span>
+									</div>
+								</div>
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.studentLastName.$invalid}">
+									<label for="studentLastName" class="control-label">Last
+										Name</label>
+									<div id="studentLastNameControls"
+										class="col-sm-12 clearPaddingLeft">
+										<input id="studentLastName" name="studentLastName" 
+											ng-maxlength="50" 
+											ng-minlength="0"  class="form-control" type="text"
+											ng-model="student.studentLastName"
+											placeholder="Enter the Last Name"></input> 
+											<span
+											class="help-block error"
+											ng-show="StudentForm.studentLastName.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.studentLastName.$error.maxlength">
+											maximum length is 50 </span>
+									</div>
+								</div>
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.studentId.$invalid}">
+									<label for="studentId" class="control-label">Roll
+										Number</label>
+									<div id="studentIdControls" class="col-sm-12 clearPaddingLeft">
+										<input id="studentId" name="studentId" ng-maxlength="50"
+											ng-minlength="0" class="form-control" type="text"
+											ng-model="student.studentId"
+											placeholder="Enter the Student Roll Number"> </input> 
+											<span
+											class="help-block error"
+											ng-show="StudentForm.studentId.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.studentId.$error.maxlength">
+											maximum length is 50 </span>
+									</div>
+								</div>
+
+
+								<div class="form-group"	ng-class="{'has-error': StudentForm.gender.$invalid}">
+									<label for="sex" class="control-label">Gender</label>
+									<div id="sexControls" class="col-sm-12 clearPaddingLeft">
+										<select name="sex" ng-model="student.sex" class="form-control">
+											<option value="">--Select Sex--</option>
+											<option value="M">Male</option>
+											<option value="F">Female</option>
+											<option value="O">Other</option>
+										</select>
+									</div>
+								</div>
+
+
+
+
+								<div class="form-group"	ng-class="{'has-error': StudentForm.waiver.$invalid}">
+									<label for="waiver" class="control-label">Waiver %</label>
+									<div id="waiverControls" class="col-sm-12 clearPaddingLeft">
+										<input id="waiver" name="waiver" class="form-control"
+											type="number" min="0" max="100"
+											 ng-maxlength="3" 
+											 ng-minlength="0" 
+											ng-pattern="{{validation.number}}" ng-model="student.waiver"
+											placeholder="Enter the Waiver"></input>
+											
+											<span	class="help-block error"
+														ng-show="StudentForm.waiver.$error.minlength">minimum value is 0
+												</span>
+												<span 	class="help-block error"
+														ng-show="StudentForm.waiver.$error.maxlength">maximum value 100
+												</span>
+									</div>
+								</div>
+
+								<div class="col-sm-12">
+									<div class="form-group"
+										ng-class="{'has-error': student.involvedWithChhatrabandhu.$invalid}">
+										<label for="involvedWithChhatrabandhu" class="control-label">Involved
+											With Chhatrabandhu</label>
+										<div id="involvedWithChhatrabandhuControls"
+											class="col-sm-12 clearPaddingLeft">
+											<input name="involvedWithChhatrabandhu" type="radio"
+												value=true ng-model="student.involvedWithChhatrabandhu">Yes
+
+											<input type="radio" name="involvedWithChhatrabandhu"
+												value=false ng-model="student.involvedWithChhatrabandhu">No
+										</div>
+									</div>
+									<div class="form-group" ng-class="{'has-error': student.bracGraduate.$invalid}">
+										<label for="bracGraduate" class="control-label">BRAC
+											Graduate</label>
+										<div id="bracGraduateControls"
+											class="col-sm-12 clearPaddingLeft">
+											<input name="bracGraduate" type="radio" value=true
+												ng-model="student.bracGraduate">Yes <input
+												type="radio" name="bracGraduate" value=false
+												ng-model="student.bracGraduate">No
+
+										</div>
+									</div>
+									<div class="form-group" ng-class="{'has-error': student.droupOut.$invalid}">
+										<label for="dropout" class="control-label">Dropout</label>
+										<div id="dropoutControls" class="col-sm-12 clearPaddingLeft">
+											<input name="dropout" type="radio" value="true"
+												ng-model="student.dropout">Yes <input type="radio"
+												name="dropout" value="false" ng-model="student.dropout">No
+										</div>
+									</div>
+								</div>
+
+
+
+
+							</div>
+
+							<div class="col-sm-3">
+								
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.typeOfCsnUdvId.$invalid}">
+									<label for="typeOfCsnUdvId" class="control-label">Csn
+										Type</label>
+									<div id="typeOfCsnUdvId" class="col-sm-12 clearPaddingLeft">
+										<select name="typeOfCsnUdvId"
+											ng-model="student.typeOfCsnUdvId"
+											class="form-control input-sm">
+											<option value="">--Select Csn Type--</option>
+											<option
+												ng-repeat="udv in udvList | filter:udv.category='Csn type'"
+												value="{{udv.id}}">{{udv.value}}</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.typeOfEthnicityCommunityUdvId.$invalid}">
+									<label for="typeOfEthnicityCommunityUdvId"
+										class="control-label">Ethnicity Community Type</label>
+									<div id="typeOfEthnicityCommunityUdvId"
+										class="col-sm-12 clearPaddingLeft">
+										<select name="typeOfEthnicityCommunityUdvId"
+											ng-model="student.typeOfEthnicityCommunityUdvId"
+											class="form-control input-sm">
+											<option value="">--Select Ethnicity Community Type--</option>
+											<option
+												ng-repeat="udv in udvList | filter:udv.category='Ethnicity community type'"
+												value="{{udv.id}}">{{udv.value}}</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.residentialAddress.$invalid}">
+									<label for="residentialAddress" class="control-label">Residential
+										Address</label>
+									<div id="residentialAddressControls"
+										class="col-sm-12 clearPaddingLeft">
+										<textarea id="residentialAddress" name="residentialAddress"
+											ng-maxlength="1000" 
+											ng-minlength="0" class="form-control" type="text"
+											ng-model="student.residentialAddress"
+											placeholder="Enter the Residential Address"></textarea>
+										<span class="help-block error"
+											ng-show="StudentForm.residentialAddress.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.residentialAddress.$error.maxlength">
+											maximum length is 1000 </span>
+									</div>
+								</div>
+								<div class="form-group"	ng-class="{'has-error': StudentForm.dateOfBirth.$invalid}">
+									<label for="dateOfBirth" class="control-label">Date Of
+										Birth</label>
+									<div id="dateOfBirthControls"
+										class="col-sm-12 clearPaddingLeft">
+										<input id="dateOfBirth" name="dateOfBirth" type="text"
+											readonly="readonly"
+											class="form-control datePicker"
+											ng-model="student.dateOfBirth"
+											placeholder="Enter the Date Of Birth"> </input> 
+											
+									</div>
+								</div>
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.religion.$invalid}">
+									<label for="religion" class="control-label">Religion</label>
+									<div id="religion" class="col-sm-12 clearPaddingLeft">
+										<select name="religion" ng-model="student.religion"
+											class="form-control input-sm">
+											<option value="">--Select Religion--</option>
+											<option
+												ng-repeat="udv in udvList | filter:udv.category='Religion'"
+												value="{{udv.value}}">{{udv.value}}</option>
+										</select>
+									</div>
+								</div>
+
+								
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.height.$invalid}">
+									<label for="height" class="control-label">Height</label>
+									<div id="heightControls" class="col-sm-12 clearPaddingLeft">
+										<input id="height" name="height" ng-maxlength="20" 
+											ng-minlength="0"
+											class="form-control" type="text" ng-model="student.height"
+											placeholder="Enter the Height"></input>
+
+									</div>
+									<span
+											class="help-block error"
+											ng-show="StudentForm.height.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.height.$error.maxlength">
+											maximum length is 20 </span>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.weight.$invalid}">
+									<label for="weight" class="control-label">Weight</label>
+									<div id="weightControls" class="col-sm-12 clearPaddingLeft">
+										<input id="weight" name="weight" class="form-control"
+											type="text" ng-maxlength="20" 
+											ng-minlength="0" ng-model="student.weight"
+											placeholder="Enter the Weight"></input>
+									</div>
+									<span
+											class="help-block error"
+											ng-show="StudentForm.weight.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.weight.$error.maxlength">
+											maximum length is 20 </span>
+									
+								</div>
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.dialectSpoken.$invalid}">
+									<label for="dialectSpoken" class="control-label">Dialect
+										Spoken</label>
+									<div id="dialectSpoken" class="col-sm-12 clearPaddingLeft">
+										<select name="dialectSpoken" ng-model="student.dialectSpoken"
+											class="form-control input-sm">
+											<option value="">--Select Dialect Spoken--</option>
+											<option
+												ng-repeat="udv in udvList | filter:udv.category='Dialect spoken'"
+												value="{{udv.value}}">{{udv.value}}</option>
+										</select>
+									</div>
+								</div>
+
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.guardianMobile.$invalid}">
+									<label for="guardianMobile" class="control-label">Guardian
+										Mobile Number</label>
+									<div id="guardianMobileControls"
+										class="col-sm-12 clearPaddingLeft">
+										<input id="guardianMobile" name="guardianMobile"
+											class="form-control" 
+											ng-maxlength="20" 
+											ng-minlength="0"
+											 
+											ng-pattern="{{validation.phoneNumber}}" 
+											type="text"
+											ng-model="student.guardianMobile"
+											placeholder="Enter the Guardian Mobile Number"></input>
+
+									</div>
+									<span
+											class="help-block error"
+											ng-show="StudentForm.guardianMobile.$error.minlength">
+											minimum length is 0 </span> 
+										<span class="help-block error" ng-show="StudentForm.guardianMobile.$error.pattern">
+												Only number[0-9] , - and space are allowed.
+											</span> 
+									<span class="help-block error"
+											ng-show="StudentForm.guardianMobile.$error.maxlength">
+											maximum length is 20 </span>
+									
+								</div>
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.fatherName.$invalid}">
+									<label for="fatherName" class="control-label">Father
+										Name</label>
+									<div id="fatherNameControls" class="col-sm-12 clearPaddingLeft">
+										<input id="fatherName" name="fatherName" ng-maxlength="100" 
+											ng-minlength="0" class="form-control"
+											type="text" ng-model="student.fatherName"
+											placeholder="Enter the Father Name"></input>
+									</div>
+									<span
+											class="help-block error"
+											ng-show="StudentForm.fatherName.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.fatherName.$error.maxlength">
+											maximum length is 100 </span>
+									
+								</div>
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.fatherDob.$invalid}">
+									<label for="fatherDob" class="control-label">Father Dob</label>
+									<div id="fatherDobControls" class="col-sm-12 clearPaddingLeft">
+										<input id="fatherDob" name="fatherDob" min="0" max="20"
+											readonly="readonly" class="form-control datePicker"
+											type="text" ng-model="student.fatherDob"
+											placeholder="Enter the Father Dob"></input>
+
+									</div>
+								</div>
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.fatherEducationalAttainment.$invalid}">
+									<label for="fatherEducationalAttainment" class="control-label">Father
+										Educational Attainment</label>
+									<div id="fatherEducationalAttainmentControls"
+										class="col-sm-12 clearPaddingLeft">
+										<textarea id="fatherEducationalAttainment"
+											name="fatherEducationalAttainment" ng-maxlength="1000" 
+											ng-minlength="0"
+											class="form-control" type="text"
+											ng-model="student.fatherEducationalAttainment"
+											placeholder="Enter the Father Educational Attainment"></textarea>
+										<span class="help-block error"
+											ng-show="StudentForm.fatherEducationalAttainment.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.fatherEducationalAttainment.$error.maxlength">
+											maximum length is 1000 </span>
+									</div>
+								</div>
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.fatherOccupation.$invalid}">
+									<label for="fatherOccupation" class="control-label">Father
+										Occupation</label>
+									<div id="fatherOccupationControls"
+										class="col-sm-12 clearPaddingLeft">
+										<input id="fatherOccupation" name="fatherOccupation"
+											class="form-control" type="text"
+											ng-maxlength="150" 
+											ng-minlength="0"
+											ng-model="student.fatherOccupation"
+											placeholder="Enter the Father Occupation"></input> <span
+											class="help-block error"
+											ng-show="StudentForm.fatherOccupation.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.fatherOccupation.$error.maxlength">
+											maximum length is 150 </span>
+									</div>
+								</div>
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.motherName.$invalid}">
+									<label for="motherName" class="control-label">Mother
+										Name</label>
+									<div id="motherNameControls" class="col-sm-12 clearPaddingLeft">
+										<input id="motherName" name="motherName" 
+										ng-maxlength="150" 
+											ng-minlength="0"
+											class="form-control"
+											type="text" ng-model="student.motherName"
+											placeholder="Enter the Mother Name"></input> <span
+											class="help-block error"
+											ng-show="StudentForm.motherName.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.motherName.$error.maxlength">
+											maximum length is 150 </span>
+									</div>
+								</div>
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.motherDob.$invalid}">
+									<label for="motherDob" class="control-label">Mother
+										Date Of Birth</label>
+									<div id="motherDobControls" class="col-sm-12 clearPaddingLeft">
+										<input id="motherDob" name="motherDob" readonly="readonly"
+											type="text" ng-maxlength="20" ng-minlength="0"
+											class="form-control datePicker" ng-model="student.motherDob"
+											placeholder="Enter the Mother Date Of Birth"></input> <span
+											class="help-block error"
+											ng-show="StudentForm.motherDob.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.motherDob.$error.maxlength">
+											maximum length is 20 </span>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.motherEducationalAttainment.$invalid}">
+									<label for="motherEducationalAttainment" class="control-label">Mother
+										Educational Attainment</label>
+									<div id="motherEducationalAttainmentControls"
+										class="col-sm-12 clearPaddingLeft">
+										<textarea id="motherEducationalAttainment"
+											name="motherEducationalAttainment"
+											ng-maxlength="1000" 
+											ng-minlength="0" class="form-control"
+											ng-model="student.motherEducationalAttainment"
+											placeholder="Enter the Mother Educational Attainment"></textarea>
+										<span class="help-block error"
+											ng-show="StudentForm.motherEducationalAttainment.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.motherEducationalAttainment.$error.maxlength">
+											maximum length is 1000 </span>
+									</div>
+								</div>
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.motherOccupation.$invalid}">
+									<label for="motherOccupation" class="control-label">Mother
+										Occupation</label>
+									<div id="motherOccupationControls"
+										class="col-sm-12 clearPaddingLeft">
+										<input id="motherOccupation" name="motherOccupation"
+											class="form-control" type="text"
+											ng-maxlength="150" 
+											ng-minlength="0"
+											ng-model="student.motherOccupation"
+											placeholder="Enter the Mother Occupation"></input> <span
+											class="help-block error"
+											ng-show="StudentForm.motherOccupation.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.motherOccupation.$error.maxlength">
+											maximum length is 150 </span>
+									</div>
+								</div>
+								<div class="form-group"
+									ng-class="{'has-error': student.familyMembersInvolveWithBrac.$invalid}">
+									<label for="familyMembersInvolveWithBrac" class="control-label">Family
+										Members Involve With BRAC</label>
+									<div id="nameControls" class="col-sm-12 clearPaddingLeft">
+										<input name="familyMembersInvolveWithBrac" type="radio"
+											value=true ng-model="student.familyMembersInvolveWithBrac">Yes</input>
+										<input type="radio" name="familyMembersInvolveWithBrac"
+											value=false ng-model="student.familyMembersInvolveWithBrac">No</input>
+									</div>
+								</div>
+								<div class="form-group" ng-class="{'has-error': StudentForm.familyMembersInvolveWithBracService.$invalid}">
+									<label for="familyMembersInvolveWithBracService" class="control-label">
+										Family Members Involve With BRAC Service
+									</label>
+									<div id="familyMembersInvolveWithBracServiceControls"
+										class="col-sm-12 clearPaddingLeft">
+										<input id="familyMembersInvolveWithBracService"
+											class="form-control" type="text"
+											name = "familyMembersInvolveWithBracService"
+											ng-maxlength="150" 
+											ng-minlength="0"
+											ng-model="student.familyMembersInvolveWithBracService"
+											placeholder="Enter the Family Members Involve With BRAC Service"></input>
+										<span class="help-block error"
+											ng-show="StudentForm.familyMembersInvolveWithBracService.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.familyMembersInvolveWithBracService.$error.maxlength">
+											maximum length is 150 </span>
+									</div>
+								</div>
+								<div class="form-group"
+									ng-class="{'has-error': student.transferedSchool.$invalid}">
+									<label for="transferedSchool" class="control-label">Transferred
+										Institute</label>
+									<div id="nameControls" class="col-sm-12 clearPaddingLeft">
+										<input name="transferedSchool" type="radio" value=true
+											ng-model="student.transferedSchool">Yes</input> <input
+											type="radio" name="transferedSchool" value=false
+											ng-model="student.transferedSchool">No</input>
+									</div>
+								</div>
+
+								<div class="form-group"
+									ng-class="{'has-error': student.replacement.$invalid}">
+									<label for="replacement" class="control-label">Is
+										Replacement</label>
+									<div id="replacement" class="col-sm-12 clearPaddingLeft">
+										<input name="replacement" type="radio" value=true
+											ng-model="student.replacement">Yes</input> <input
+											type="radio" name="replacement" value=false
+											ng-model="student.replacement">No</input>
+									</div>
+								</div>
+
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.transferredSchoolId.$invalid}">
+									<label for="transferredSchoolId" class="control-label">Transferred
+										Institute ID</label>
+									<div id="transferredSchoolIdControls"
+										class="col-sm-12 clearPaddingLeft">
+										<input id="transferredSchoolId" class="form-control"
+											type="text" ng-model="student.transferredSchoolId"
+											name="transferredSchoolId"
+											ng-maxlength="100" 
+											ng-minlength="0"
+											placeholder="Enter the Transferred Institute ID"></input> <span
+											class="help-block error"
+											ng-show="StudentForm.transferredSchoolId.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.transferredSchoolId.$error.maxlength">
+											maximum length is 100 </span>
+									</div>
+								</div>
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.nameOfTransferredSchool.$invalid}">
+									<label for="nameOfTransferredSchool" class="control-label">Name
+										Of Transferred Institute</label>
+									<div id="nameOfTransferredSchoolControls"
+										class="col-sm-12 clearPaddingLeft">
+										<input id="nameOfTransferredSchool"
+											name="nameOfTransferredSchool" class="form-control"
+											type="text" ng-maxlength="100" 
+											ng-minlength="0"
+											ng-model="student.nameOfTransferredSchool"
+											placeholder="Enter the Name Of Transferred Institute"></input>
+									</div>
+									<span
+											class="help-block error"
+											ng-show="StudentForm.nameOfTransferredSchool.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.nameOfTransferredSchool.$error.maxlength">
+											maximum length is 100 </span>
+									
+								</div>
+								<div class="form-group"
+									ng-class="{'has-error': StudentForm.address.$invalid}">
+									<label for="address" class="control-label">Transferred
+										Institute Address</label>
+									<div id="addressControls" class="col-sm-12 clearPaddingLeft">
+										<textarea id="address" name="address" ng-maxlength="300" 
+											ng-minlength="0"
+											class="form-control" ng-model="student.address"
+											placeholder="Enter the Address Of Transferred Institute"></textarea>
+
+									</div>
+									<span
+											class="help-block error"
+											ng-show="StudentForm.address.$error.minlength">
+											minimum length is 0 </span> <span class="help-block error"
+											ng-show="StudentForm.address.$error.maxlength">
+											maximum length is 300 </span>
+								</div>
+							</div>
+
+
+
+							<!-- ==================================================================================================== -->
+						</div>
+						<div class="panel-footer">
+							<div class="form-group">
+								<div class="col-sm-10">
+									<button id="saveStudent" name="saveStudent"
+										class="btn btn-primary"
+										ng-disabled="isClean() || StudentForm.$invalid"
+										ng-click="save()">
+										<span class="glyphicon glyphicon-ok-sign"> </span> Save
+									</button>
+									<button id="cancel" name="cancel" class="btn btn-default"
+										onclick="return false;" ng-click="cancel()">
+										<span class="glyphicon glyphicon-remove-sign"> </span> Cancel
+									</button>
+									<button id="deleteStudent" name="deleteStudent"
+										class="btn btn-danger" ng-show="Student.id"
+										ng-click="remove(Student.id)">
+										<span class="glyphicon glyphicon-trash"> </span> Delete
+									</button>
+								</div>
+							</div>
+							<div ng-show="displayError" class="alert alert-danger">
+								<strong>Error!</strong> Something broke. Retry, or cancel and
+								start afresh.
+							</div>
+						</div>
+					</div>
+				</form>
+			<!-- </div>
+		</div>
+	</div> -->
+	<!-- End of Basic content -->
+
+	<!-- Start of Fee Content -->
+	<div id="fee" class="tab-pane fade">
+		<h3>Fee</h3>
+		<p>Fee Content</p>
+	</div>
+	<!-- End of Fee Content -->
+
+	<!-- Start of History Content -->
+	<div id="history" class="tab-pane fade">
+		<h3>History</h3>
+		<p>History Content</p>
+	</div>
+	<!-- End of Fee Content -->
+
+</div>
+<!-- tab content end -->
+<script type="text/javascript">
+
+//======================================================================
+//Prevent enterkey press action
+$("#StudentForm" ).keypress(function(event) {
+	if (event.which == 13 ) {
+			/* $("#dropOutReason")
+			{
+				return true;	
+			} */
+	
+			$("#dropOutReason").keyup(function(event){
+			    if(event.which == 13){
+			    	//console.log( "Dropdown for .keypress() called." );
+			        return true;
+			    }
+			});
+			 //console.log( "Handler for .keypress() called." );
+		     event.preventDefault();
+			 
+	  }
+	  //console.log( "Handler for .keypress() called." );
+});
+//=======================================================================
+
+
+
+    $('.datePicker').datepicker({
+        autoclose: true,
+        format: "yyyy-mm-dd",
+        todayHighlight: true,
+        orientation: "top auto"
+    });
+
+    $('.yearPicker').datepicker({
+        autoclose: true,
+        format: "yyyy",
+        todayHighlight: true,
+        orientation: "top auto",
+        minViewMode: 2
+    });
+
+    $(document).ready(function(){
+        $(".nav-tabs a").click(function(e){
+            e.preventDefault();
+            $(this).tab('show');
+        });
+    });
+</script>
+<script src="scripts/controllers/bracLocation/bracLocationController.js"></script>

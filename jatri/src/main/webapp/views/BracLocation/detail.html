@@ -1,0 +1,54 @@
+<div class="col-sm-{{row}}">
+	<div class="form-group">
+		<label for="locationRegionId" class="control-label">Region</label>
+		<div id="locationRegionIdControls" class="col-sm-12 clearPaddingLeft">
+			<select name="locationRegionId" ng-required="required"
+				ng-model="location.selectedRegionId" class="form-control"
+				ng-disabled="location.checkAvailability('region')"
+				ng-change="location.onRegionChange(location.selectedRegionId)">
+
+				<option value="">--Select Region--</option>
+				<option ng-selected="location.selectedRegionId == region.id"
+					ng-repeat="region in location.regionList" 
+					value="{{region.id}}">{{region.name}}</option>
+			</select>
+		</div>
+	</div>
+</div>
+
+
+<div class="col-sm-{{row}}">
+	<div class="form-group">
+		<label for="locationAreaId" class="control-label">Area</label>
+		<div id="locationAreaIdControls" class="col-sm-12 clearPaddingLeft">
+			<select name="location.locationAreaId"
+				ng-model="location.selectedAreaId"
+				ng-disabled="location.checkAvailability('area')" class="form-control"
+				ng-change="location.onAreaChange(location.selectedAreaId)">
+
+				<option value="">--Select Area--</option>
+				<option ng-selected="location.selectedAreaId == area.id"
+					ng-repeat="area in location.areaList"
+					value="{{area.id}}">{{area.name}}</option>
+			</select>
+		</div>
+	</div>
+</div>
+
+
+<div class="col-sm-{{row}}">
+	<div class="form-group">
+		<label for="locationBranchId" class="control-label">Branch</label>
+		<div id="locationBranchIdControls" class="col-sm-12 clearPaddingLeft">
+			<select name="locationBranchId"
+				ng-model="location.selectedBranchId" class="form-control"
+				ng-disabled="location.checkAvailability('branch')"
+				ng-change="location.onBranchChange(location.selectedBranchId)">
+
+				<option value="">--Select Branch--</option>
+				<option ng-selected="location.selectedBranchId == branch.id"
+					ng-repeat="branch in location.branchList" value="{{branch.id}}">{{branch.name}}</option>
+			</select>
+		</div>
+	</div>
+</div>

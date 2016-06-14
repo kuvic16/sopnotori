@@ -1,0 +1,517 @@
+<style>
+	form .ng-invalid.ng-dirty { background-color: lightpink;}
+	select.ng-invalid.ng-dirty {
+    border-color:#FF0000;
+}
+
+/* select:invalid, textarea.invalid{
+	border: 2px solid #A94442;
+}
+ */
+	/* 
+	select:required {
+  		border-color: red;
+  		opacity: 1;
+	}
+	
+	input:required {
+  		border-color: red;
+  		opacity: 1;
+	} */
+	
+
+}
+</style>
+
+<div class="row" style="margin-top: 10px">
+    <div class="col-sm-12">
+        <form id="InstituteForm" name="InstituteForm" class="form-horizontal" role="form">
+            <div class="panel panel-green">
+                <div class="panel-heading" ng-switch on="$location.path().indexOf('/Institute/new') > -1">
+                    <div ng-switch-when="true">Create a new Institute</div>
+                    <div ng-switch-when="false">View or edit Institute</div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-3">
+                    	<div class="form-group" ng-class="{'has-error': InstituteForm.name.$invalid}">
+                            <label for="name" class="control-label">Name</label>
+                            <div id="nameControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="name"
+                                	   name = "name"
+                                       type="text"
+                                       required
+                                       ng-maxlength="50"
+                                       ng-minlength="1"
+                                       class="form-control"
+                                       ng-model="institute.name"
+                                       placeholder="Enter Institute Name">
+                                       
+                                <span class="help-block error" ng-show="InstituteForm.name.$error.minlength">
+                                    minimum length is 1
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.name.$error.maxlength">
+                                    maximum length is 50
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.code.$invalid}">
+                            <label for="code" class="control-label">Code</label>
+                            <div id="codeControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="code"
+                                	   name="code"
+                                       type="text"
+                                       ng-maxlength="20"
+                                       ng-minlength="0"
+                                       class="form-control"
+                                       ng-model="institute.code"
+                                       placeholder="Enter the code">
+                                               
+                                <span class="help-block error" ng-show="InstituteForm.code.$error.minlength">
+                                    minimum length is 0
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.code.$error.maxlength">
+                                    maximum length is 20
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.instituteTypeUdv.$invalid}">
+                            <label for="instituteTypeUdv" class="control-label">Institute Type</label>
+                            <div id="instituteTypeUdvControl" class="col-sm-12 clearPaddingLeft">
+                                <select name="instituteTypeUdv" ng-model="institute.instituteTypeUdvId" required class="form-control">
+                                    <option value="">--Select Institute Type--</option>
+                                    <option ng-selected="institute.instituteTypeUdvId == udv.id" 
+                                    		ng-repeat="udv in udvList | filter:udv.category='Institute type'" 
+                                    		value="{{udv.id}}"> {{udv.value}} </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.openingDate.$invalid}">
+                            <label for="openingDate" class="control-label">Opening Date</label>
+                            <div id="openingDateControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="openingDate"
+                                       type="text"
+                                       name="openingDate"
+                                       readonly="readonly"
+                                       class="form-control datePicker"
+                                       ng-model="institute.openingDate"
+                                       placeholder="Enter the Opening Date">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.sessionStart.$invalid}">
+                            <label for="sessionStart" class="control-label">Session Start</label>
+                            <div id="sessionStartControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="sessionStart"
+                                       type="text"
+                                       name="sessionStart"
+                                       readonly="readonly"
+                                       class="form-control datePicker"
+                                       ng-model="institute.sessionStart"
+                                       placeholder="Enter the Session Start Date">
+                                                              
+                               
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.sessionEnd.$invalid}">
+                            <label for="sessionEnd" class="control-label">Session End</label>
+                            <div id="sessionEndControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="sessionEnd"
+                                       type="text"
+                                       name="sessionEnd"
+                                       readonly="readonly"
+                                       class="form-control datePicker"
+                                       ng-model="institute.sessionEnd"
+                                       placeholder="Enter the Session End Date"></div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col-sm-3">
+                    	<div class="form-group" ng-class="{'has-error': InstituteForm.numberOfShift.$invalid}">
+                            <label for="numberOfShift" class="control-label">Number of Shift</label>
+                            <div id="numberOfShiftControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="numberOfShift"
+                                	   name = "numberOfShift"
+                                       type="number"
+                                       ng-pattern = "{{validation.number}}" 
+                                       min="0"
+                                       max="10"
+                                       ng-maxlength="2"
+                                       ng-minlength="0"
+                                       class="form-control"
+                                       ng-model="institute.numberOfShift"
+                                       placeholder="Enter the Number of Shift">
+                                <span class="help-block error" ng-show="InstituteForm.numberOfShift.$error.minlength">
+                                    minimum length is 0
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.numberOfShift.$error.maxlength">
+                                    maximum length is 10
+                                </span>
+                            </div>
+                        </div>
+                    	<div class="form-group" ng-class="{'has-error': InstituteForm.organizationId.$invalid}">
+							<label for="organizationId" class="control-label">Organization</label>
+							<div id="organizationIdControls" class="col-sm-12 clearPaddingLeft">
+								<select name="organizationId" 
+										ng-model="institute.organizationId"
+										class="form-control">
+									<option value="">--Select Organization--</option>
+									<option ng-selected="institute.organizationId == organization.id"
+											ng-repeat="organization in organizationList" 
+											value="{{organization.id}}">
+											{{organization.name}}
+									</option>
+								</select>
+							</div>
+						</div>
+						
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.poId.$invalid}">
+							<label for="poId" class="control-label">Program Organizer</label>
+							<div id="poIdControls" class="col-sm-12 clearPaddingLeft">
+								<select name="poId" ng-model="institute.poId" class="form-control">
+									<option value="">--Select Program Organizer--</option>
+									<option ng-selected="institute.poId == po.id" 
+											ng-repeat="po in userList" 
+											value="{{po.id}}">
+											{{po.username}}
+									</option>
+								</select>
+							</div>
+						</div>
+
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.donorId.$invalid}">
+							<label for="donorId" class="control-label">Donor</label>
+							<div id="donorIdControls" class="col-sm-12 clearPaddingLeft">
+								<select name="donorId" ng-model="institute.donorId" class="form-control">
+									<option value="">--Select Donor--</option>
+									<option ng-selected="institute.donorId == donor.id"
+											ng-repeat="donor in donorList" value="{{donor.id}}">
+											{{donor.name}}
+									</option>
+								</select>
+							</div>
+						</div>
+											
+						<div class="form-group"	ng-class="{'has-error': InstituteForm.projectCodeUdvId.$invalid}">
+							<label for="projectCodeUdvId" class="control-label">Project</label>
+							<div id="projectCodeUdvIdControls" class="col-sm-12 clearPaddingLeft">
+								<select name="projectCodeUdvId" ng-model="institute.projectCodeUdvId" class="form-control">
+									<option value="">--Select Project--</option>
+									<option ng-selected="institute.projectCodeUdvId == udv.id"
+											ng-repeat="udv in udvList | filter:udv.category='Project code'" 
+											value="{{udv.id}}">
+											{{udv.value}}
+									</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group" ng-class="{'has-error': InstituteForm.educationType.$invalid}">
+							<label for="educationType" class="control-label">Education Type</label>
+								<div ng-repeat="educationType in educationTypeList">
+									<label  style="margin-right: 15px; font-style: normal; font-weight: 100;"> 
+										<input 	type="checkbox" 
+												name="educationType"
+												data-checklist-model="selectedEducationType.educationType" 
+												data-checklist-value="educationType" />
+												{{educationType.name}}
+									</label>
+								</div>
+						</div>
+						
+						
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.locationTypeUdvId.$invalid}">
+                            <label for="locationTypeUdvId" class="control-label">Location Type</label>
+                            <div id="locationTypeUdvControls" class="col-sm-12 clearPaddingLeft">
+                                <select name="locationTypeUdvId" 
+                                		ng-model="institute.locationTypeUdvId" 
+                                		required 
+                                		class="form-control">
+                                    <option value="">--Select Location Type--</option>
+                                    <option ng-selected="institute.locationTypeUdvId == udv.id" 
+                                    		ng-repeat="udv in udvList | filter:udv.category='Location type'" 
+                                    		value="{{udv.id}}">{{udv.value}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+						
+						<div ng-controller = "BracLocationController">
+	         				<braclocation required="true" name="brac"></braclocation>
+	      				</div>
+	      				
+	      				<div class="form-group" ng-class="{'has-error': InstituteForm.totalBoys.$invalid}">
+                            <label for="totalBoys" class="control-label">Total Boys</label>
+	                            <div id="totalBoysControls" class="col-sm-12 clearPaddingLeft">
+	                                <input id="totalBoys"
+	                                          type="number"
+	                                          name="totalBoys"
+	                                          min="0"
+	                                          max="1000000000"
+	                                          ng-maxlength="10"
+	                                       	  ng-minlength="0"
+	                                          class="form-control"
+	                                          ng-model="institute.totalBoys"
+	                                          placeholder="Enter the Total Boys"></input>
+	                                <span class="help-block error" ng-show="InstituteForm.totalBoys.$error.minlength">
+	                                    minimum value is 0
+	                                </span>
+	                                <span class="help-block error" ng-show="InstituteForm.totalBoys.$error.maxlength">
+	                                    maximum value can contains is 1000000000
+	                                </span>
+	                            </div>
+                        </div>
+                        
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.totalGirls.$invalid}">
+                            <label for="totalGirls" class="control-label">Total Girls</label>
+                            <div id="totalGirlsControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="totalGirls"
+                                          type="number"
+                                          name="totalGirls"
+                                          min="0"
+                                          max="1000"
+                                          ng-maxlength="4"
+                                       	  ng-minlength="0"
+                                          class="form-control"
+                                          ng-model="institute.totalGirls"
+                                          placeholder="Enter the Total Boys"></input>
+                                <span class="help-block error" ng-show="InstituteForm.totalGirls.$error.minlength">
+                                    minimum value is 0
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.totalGirls.$error.maxlength">
+                                     maximum value can contains is 1000
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.totalStudent.$invalid}">
+                            <label for="totalStudent" class="control-label">Total Student</label>
+                            <div id="totalStudentControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="totalStudent"
+                                		  disabled="disabled"
+                                          type="number"
+                                          name="totalStudent"
+                                          min="0"
+                                          max="1000"
+                                          class="form-control"
+                                          ng-model="institute.totalStudent"
+                                          value="{{institute.totalStudent = institute.totalBoys + institute.totalGirls}}"
+                                          placeholder="Enter the Total Student"></input>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.totalEthnic.$invalid}">
+                            <label for="totalEthnic" class="control-label">Total Ethnic</label>
+                            <div id="totalEthnicControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="totalEthnic"
+                                          type="number"
+                                          name="totalEthnic"
+                                          ng-maxlength="4"
+                                       	  ng-minlength="0"
+                                          min="0"
+                                          max="1000"
+                                          class="form-control"
+                                          ng-model="institute.totalEthnic"
+                                          placeholder="Enter the Total Ethnic"></input>
+                                <span class="help-block error" ng-show="InstituteForm.totalEthnic.$error.minlength">
+                                    minimum value is 0
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.totalEthnic.$error.maxlength">
+                                     maximum value can contains is 1000
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.totalCsn.$invalid}">
+                            <label for="totalCsn" class="control-label">Total Csn</label>
+                            <div id="totalCsnControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="totalCsn"
+                                          type="number"
+                                          name="totalCsn"
+                                          min="0"
+                                          max="1000"
+                                          ng-maxlength="4"
+                                       	  ng-minlength="0"
+                                          class="form-control"
+                                          ng-model="institute.totalCsn"
+                                          placeholder="Enter the Total Csn"></input>
+                                <span class="help-block error" ng-show="InstituteForm.totalCsn.$error.minlength">
+                                     minimum value is 0
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.totalCsn.$error.maxlength">
+                                    maximum value can contains is 1000
+                                </span>
+                            </div>
+                        </div>
+                        
+                       
+	      				
+                    </div>
+                	<div class="col-sm-3">                    	
+                    	<div class="form-group" ng-class="{'has-error': InstituteForm.toiletAvailability.$invalid}">
+                            <label for="toiletAvailability" class="control-label">Toilet Availability</label>
+                            <div id="toiletAvailabilityControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="toiletAvailability"
+                                	   name="toiletAvailability"
+                                       type="radio"
+                                       value=true
+                                       ng-model="institute.toiletAvailability">Yes
+                                
+                                <input id="toiletAvailability"
+                                	   name="toiletAvailability"	
+                                       type="radio"
+                                       value=false
+                                       ng-model="institute.toiletAvailability">No
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.electricity.$invalid}">
+                            <label for="electricity" class="control-label">Electricity</label>
+
+                            <div id="electricityControls" class="col-sm-12 clearPaddingLeft">
+                                <input type="radio"
+                                       name="electricity"
+                                       value="true"
+                                       ng-model="institute.electricity">Yes
+                                
+                                <input type="radio"
+                                	   name="electricity"
+                                       value="false"
+                                       ng-model="institute.electricity">No
+                            </div>
+                        </div>
+
+                       
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.nearestPublicSchool.$invalid}">
+                            <label for="nearestPublicSchool" class="control-label">Nearest Public School</label>
+                            <div id="nearestPublicSchoolControls" class="col-sm-12 clearPaddingLeft">
+                                <textarea id="nearestPublicSchool"
+                                		  name = "nearestPublicSchool"
+                                          ng-maxlength="500"
+                                          ng-minlength="0"
+                                          class="form-control"
+                                          ng-model="institute.nearestPublicSchool"
+                                          placeholder="Enter the Nearest Public School"></textarea>
+                                <span class="help-block error" ng-show="InstituteForm.nearestPublicSchool.$error.minlength">
+                                    minimum length is 0
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.nearestPublicSchool.$error.maxlength">
+                                    maximum length is 500
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.distanceFromNearestPublicSchool.$invalid}">
+                            <label for="distanceFromNearestPublicSchool" class="control-label">Distance From Nearest Public School</label>
+                            <div id="distanceFromNearestPublicSchoolControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="distanceFromNearestPublicSchool"
+                                       type="text"
+                                       name="distanceFromNearestPublicSchool"
+                                       ng-maxlength="10"
+                                       ng-minlength="0"
+                                       class="form-control"
+                                       ng-model="institute.distanceFromNearestPublicSchool"
+                                       placeholder="Enter the Distance From Nearest Public School">
+                                
+                                <span class="help-block error" ng-show="InstituteForm.distanceFromNearestPublicSchool.$error.minlength">
+                                    minimum length is 0
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.distanceFromNearestPublicSchool.$error.maxlength">
+                                    maximum length is 10
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': InstituteForm.distanceFromSchoolToBranchOffice.$invalid}">
+                            <label for="distanceFromSchoolToBranchOffice" class="control-label">Distance From School To Branch Office</label>
+                            <div id="distanceFromSchoolToBranchOfficeControls" class="col-sm-12 clearPaddingLeft">
+                                <input id="distanceFromSchoolToBranchOffice"
+                                       type="text"
+                                       name="distanceFromSchoolToBranchOffice"
+                                       ng-maxlength="10"
+                                       ng-minlength="0"
+                                       class="form-control"
+                                       ng-model="institute.distanceFromSchoolToBranchOffice"
+                                       placeholder="Enter the Distance From School To Branch Office">
+                                
+                                <span class="help-block error" ng-show="InstituteForm.distanceFromSchoolToBranchOffice.$error.minlength">
+                                    minimum length is 0
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.distanceFromSchoolToBranchOffice.$error.maxlength">
+                                    maximum length is 10
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  ========================================================================	 -->
+
+
+                <div class="panel-footer">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <button id="saveInstitute"
+                                    name="saveInstitute"
+                                    class="btn btn-primary"
+                                    ng-disabled="isClean() || InstituteForm.$invalid"
+                                    ng-click="save()">
+                                <span class="glyphicon glyphicon-ok-sign"></span>
+                                Save
+                            </button>
+
+                            <button id="cancel"
+                                    name="cancel"
+                                    class="btn btn-default"
+                                    onclick="return false;"
+                                    ng-click="cancel()">
+                                <span class="glyphicon glyphicon-remove-sign"></span>
+                                Cancel
+                            </button>
+
+                            <button id="deleteInstitute"
+                                    name="deleteInstitute"
+                                    class="btn btn-danger"
+                                    ng-show="institute.id"
+                                    ng-click="remove(institute.name)">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+
+                    <div ng-show="displayError" class="alert alert-danger">
+                        <strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+                    </div>
+                    
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+//===================================================
+
+// Prevent enterkey press action
+$("#InstituteForm" ).keypress(function(event) {
+	if (event.which == 13 ) {
+		event.preventDefault(); 
+	}
+});
+//===================================================
+
+$('.datePicker').datepicker({
+	autoclose: true,
+          format: "yyyy-mm-dd",
+          todayHighlight: true,
+          orientation: "top auto"
+});
+</script>
+<script src="scripts/controllers/bracLocation/bracLocationController.js"></script>

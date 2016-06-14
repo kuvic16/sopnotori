@@ -1,0 +1,243 @@
+<form id="IncomeForm" name="IncomeForm" class="form-horizontal" role="form">
+	<div class="panel panel-green">
+		<div class="panel-heading" ng-switch on="$location.path().indexOf('/Income/new') > -1">
+			<div ng-switch-when="true">Create a new Income</div>
+			<div ng-switch-when="false">View or edit Income</div>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div ng-controller="BracLocationController">
+					<braclocation row="3" required="true" name="brac"></braclocation>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group" ng-class="{'has-error': IncomeForm.totalInstitute.$invalid}">
+						<label for="targetAmount" class="control-label">Total Institute</label>
+						<div class="col-sm-12 clearPaddingLeft">
+							<input id="totalInstitute"
+								name="totalInstitute" 
+								type="text" 
+								class="form-control"
+								ng-pattern="{{validation.number}}"
+								ng-minlength="0"
+								ng-maxlength="20" 
+								ng-model="income.totalInstitute">
+						<span 	class="help-block error" ng-show="IncomeForm.totalInstitute.$error.minlength"> 
+							minimum value can be 0 
+						</span> 
+						<span class="help-block error" ng-show="IncomeForm.totalInstitute.$error.maxlength">
+						 	maximum value can be 10000000000000000000 
+						 </span>
+						 
+						 <span 	class="help-block error" ng-show="IncomeForm.totalInstitute.$error.pattern"> 
+							Only numeric value [0-9] are allowed 
+						</span> 
+						
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="form-group" ng-class="{'has-error': IncomeForm.totalStudent.$invalid}">
+						<label for="targetAmount" class="control-label">Total Student</label>
+						<div class="col-sm-12 clearPaddingLeft">
+							<input id="totalStudent"
+								name="totalStudent" 
+								type="text" 
+								class="form-control"
+								ng-pattern="{{validation.number}}"
+								ng-minlength="0"
+								ng-maxlength="20" 
+								ng-model="income.totalStudent">
+						<span 	class="help-block error" ng-show="IncomeForm.totalStudent.$error.minlength"> 
+							minimum value can be 0 
+						</span> 
+						<span class="help-block error" ng-show="IncomeForm.totalStudent.$error.maxlength">
+						 	maximum value can be 10000000000000000000 
+						 </span>
+						 
+						 <span 	class="help-block error" ng-show="IncomeForm.totalStudent.$error.pattern"> 
+							Only numeric value [0-9] are allowed 
+						</span> 
+						
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group" ng-class="{'has-error': IncomeForm.indicatorUdvId.$invalid}">
+						<label for="indicatorUdvId" class="control-label">Income indicator</label>
+						<div class="col-sm-12 clearPaddingLeft">
+							<select id="indicatorUdvId" name="indicatorUdvId" ng-model="income.indicatorUdvId" class="form-control">
+								<option value="">--Select type--</option>
+								<option ng-selected="income.indicatorUdvId == udv.id" 
+								ng-repeat="udv in udvList | filter:udv.category='Income indicator'"
+								value="{{udv.id}}">{{udv.value}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-3">
+					<div class="form-group" ng-class="{'has-error': IncomeForm.targetAmount.$invalid}">
+						<label for="targetAmount" class="control-label">Target Amount</label>
+						<div class="col-sm-12 clearPaddingLeft">
+							<input id="targetAmount"
+								name="targetAmount" 
+								type="text" 
+								class="form-control"
+								ng-pattern="{{validation.number}}"
+								ng-minlength="0"
+								ng-maxlength="20" 
+								ng-model="income.targetAmount">
+						<span 	class="help-block error" ng-show="IncomeForm.targetAmount.$error.minlength"> 
+							minimum value can be 0 
+						</span> 
+						<span class="help-block error" ng-show="IncomeForm.targetAmount.$error.maxlength">
+						 	maximum value can be 10000000000000000000 
+						 </span>
+						 
+						 <span 	class="help-block error" ng-show="IncomeForm.targetAmount.$error.pattern"> 
+							Only numeric value [0-9] and . are allowed 
+						</span> 
+						
+						</div>
+					</div>
+				</div>
+				
+				<div class="col-sm-3">
+					<div class="form-group" ng-class="{'has-error': IncomeForm.depositAmount.$invalid}">
+						<label for="depositAmount" class="control-label">Deposit Amount</label>
+						<div class="col-sm-12 clearPaddingLeft">
+							<input id="depositAmount"
+								name="depositAmount" 
+								type="text" 
+								class="form-control"
+								ng-pattern="{{validation.number}}"
+								ng-minlength="0"
+								ng-maxlength="20" 
+								ng-model="income.depositAmount">
+						<span 	class="help-block error" ng-show="IncomeForm.depositAmount.$error.minlength"> 
+							minimum value can be 0 
+						</span> 
+						<span class="help-block error" ng-show="IncomeForm.depositAmount.$error.maxlength">
+						 	maximum value can be 10000000000000000000 
+						 </span>
+						 
+						 <span 	class="help-block error" ng-show="IncomeForm.depositAmount.$error.pattern"> 
+							Only numeric value [0-9] and . are allowed 
+						</span> 
+						
+						</div>
+					</div>
+				</div>				
+			</div>
+				
+			<div class="row">
+				<div class="col-sm-3">	
+					<div class="form-group" ng-class="{'has-error': IncomeForm.month.$invalid}">
+						<label for="month" class="control-label">Month</label>
+						<div class="col-sm-12 clearPaddingLeft">
+							<select id="month" name="month" ng-model="income.month" class="form-control">
+								<option value="">--Select Month--</option>
+								<option value="0">January</option>
+								<option value="1">February</option>
+								<option value="2">March</option>
+								<option value="3">April</option>
+								<option value="4">May</option>
+								<option value="5">June</option>
+								<option value="6">July</option>
+								<option value="7">August</option>
+								<option value="8">September</option>
+								<option value="9">October</option>
+								<option value="10">November</option>
+								<option value="11">December</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group" ng-class="{'has-error': IncomeForm.year.$invalid}">
+						<label for="year" class="control-label">Year</label>
+						<div class="col-sm-12 clearPaddingLeft">
+							<input id="year"
+								   name="year"
+								   type="text"
+								   readonly="readonly"
+								   class="form-control yearPicker"
+								   ng-model="income.year">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3" ng-if="loogedUser.username == 'admin'">
+					<div class="form-group" ng-class="{'has-error': income.verified.$invalid}">
+						<label for="verified" class="control-label">Verified </label>
+						<div class="col-sm-12 clearPaddingLeft">
+							<label style="margin-right: 15px; font-style: normal; font-weight: 100;">
+								<input id="verified" type="radio" name="verified" value=true ng-model="income.verified"> Yes
+							</label>
+							<label style="margin-right: 15px; font-style: normal; font-weight: 100;">
+								<input type="radio" name="verified" value=false ng-model="income.verified"> No
+							</label>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="form-group">
+				<div class="col-sm-10">
+					<button id="saveExpenditure" name="saveExpenditure" class="btn btn-primary" ng-disabled="isClean() || IncomeForm.$invalid" ng-click="save()">
+						<span class="glyphicon glyphicon-ok-sign"></span> Save
+					</button>
+
+					<button id="cancel" name="cancel" class="btn btn-default" onclick="return false;" ng-click="cancel()">
+						<span class="glyphicon glyphicon-remove-sign"></span> Cancel
+					</button>
+
+					<button id="deleteIncome" name="deleteIncome" class="btn btn-danger" ng-show="income.id" ng-click="remove('')">
+						<span class="glyphicon glyphicon-trash"></span> Delete
+					</button>
+				</div>
+			</div>
+
+			<div ng-show="displayError" class="alert alert-danger">
+				<strong>Error!</strong> Something broke. Retry or cancel and start fresh.
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+
+//======================================================================
+	// Prevent enterkey press action
+	$("#FeeForm" ).keypress(function(event) {
+		if (event.which == 13 ){
+			event.preventDefault(); 
+		}
+		  //console.log( "Handler for .keypress() called." );
+	});
+//=======================================================================
+
+$('.datePicker').datepicker({
+	autoclose: true,
+          format: "yyyy-mm-dd",
+          todayHighlight: true,
+          orientation: "top auto"
+});
+
+$('.yearPicker').datepicker({
+	autoclose: true,
+          format: "yyyy",
+          startDate: "01/01/" + new Date().getFullYear(),
+          startView: 1,
+          minViewMode: 2,
+          keyboardNavigation: true,
+          forceParse: false,
+          todayHighlight: true,
+          orientation: "top auto",
+	minViewMode: 2
+});
+</script>
+<script src="scripts/controllers/bracLocation/bracLocationController.js"></script>

@@ -1,0 +1,373 @@
+<div style="padding: 5px">
+<h3 class="button-tooltip">
+Fee Setup
+	<span	data-toggle="collapse" 
+			data-target="#collapseOne"
+			data-parent="#accordion"> 
+			<a 	style="cursor: pointer; float: right; margin-left: 5px;"
+				data-toggle="tooltip" 
+				data-placement="top"
+				data-original-title="Advanced Search" 
+				class="btn btn-info btn-circle">
+				<span class="fa fa-search"></span>
+			</a>
+	</span> 
+	<a class="btn btn-success"
+		style="float: right; margin-left: 5px;" 
+		data-placement="top"
+		data-toggle="tooltip" 
+		data-original-title="Apply to Students"
+		onclick="closeToolTip()" ng-click="applyToAllStudent()">
+		<span class="glyphicon glyphicon-ok"></span> Apply  
+	</a>
+	<a class="btn btn-primary"
+		style="float: right; margin-left: 5px;" 
+		data-placement="top"
+		data-toggle="tooltip" 
+		data-original-title="Create Fee"
+		onclick="closeToolTip()" 
+		href="#/Fee/engine">
+		<span class="fa fa-plus"></span> Setup Engine  
+	</a>
+	<a class="btn btn-primary"
+		style="float: right; margin-left: 5px;" 
+		data-placement="top"
+		data-toggle="tooltip" 
+		data-original-title="Create New Fee"
+		onclick="closeToolTip()" 
+		href="#/Fee/new">
+		<span class="fa fa-plus"></span>  
+	</a>
+		 
+	<a id="refresh"
+		class="btn btn-success btn-circle"
+		style="float: right; margin-left: 5px;" 
+		data-placement="top"
+		data-toggle="tooltip" 
+		data-original-title="Refresh"
+		href="#/Fee/" 
+		onclick="closeToolTip()"> 
+		<span class="fa fa-refresh"></span>
+	</a> 
+	
+	<!-- <a id="download" class="btn btn-warning btn-circle"
+		style="float: right; margin-left: 5px;" 
+		data-placement="top"
+		data-toggle="tooltip" 
+		data-original-title="Export" 
+		href="#">
+		<span class="fa fa-download"></span> 
+	</a> -->
+		
+	<script>
+	    // tooltip initialize
+	    $(function () {
+		    $('.button-tooltip').tooltip({
+			    html: true,
+		        selector: "[data-toggle=tooltip]",
+		        container: "body"
+		    });
+	    });
+	
+	    function closeToolTip(){
+	    	$(".tooltip").remove();
+	    }
+    </script>
+    
+</h3>
+
+<div class="form-horizontal">
+	<div class="panel-group" id="accordion">
+		<div class="panel panel-warning" style="border-color: transparent;">
+			<div id="collapseOne" class="panel-collapse collapse">
+				<div class="panel-body" style="padding-left: 0px">
+				
+					<form id="FeeSearch" name="FeeForm" class="form-horizontal">
+					
+						<div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+							<div class="row">
+							
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="feeTypeUdvId" class="control-label">Fee Type</label>
+											<div id="feeTypeUdvIdControl" class="col-sm-12 clearPaddingLeft">
+												<select name="feeTypeUdvId" ng-model="search.feeTypeUdvId" class="form-control">
+													<option value="">
+														--Select--
+													</option>
+													<option ng-repeat="udv in udvList | filter:udv.category='Fee type'" value="{{udv.id}}"> 
+														{{udv.value}} 
+													</option>
+												</select></div> 
+									</div>
+								</div>
+							
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="feeCategoryUdvId" class="control-label">Fee Category</label>
+											<div id="feeCategoryUdvIdControl" class="col-sm-12 clearPaddingLeft">
+											<select name="feeCategoryUdvId" ng-model="search.feeCategoryUdvId" class="form-control">
+												<option value="">
+													--Select--
+												</option>
+												<option ng-repeat="udv in udvList | filter:udv.category='Fee category'" value="{{udv.id}}"> 
+													{{udv.value}} 
+												</option>
+											</select></div> 
+									</div>
+								</div>
+								
+							<div class="col-sm-3">
+								<div class="form-group" ng-class="{'has-error': FeeForm.code.$invalid}">
+									<label for="code" class="control-label">A/C Code</label> 
+										<div id="codeControl" class="col-sm-12 clearPaddingLeft">
+									<input 	id="code" 
+											name="code" 
+											ng-maxlength="20" 
+											ng-minlength="0"
+											class="form-control" 
+											type="text"
+											ng-model="search.code"></input></div>
+									<span class="help-block error" ng-show="FeeForm.code.$error.minlength"> 
+												minimum code length can be 0 </span> 
+									<span class="help-block error" ng-show="FeeForm.code.$error.maxlength"> 
+												maximum code length can be 20 </span>
+								</div>
+							</div>
+							
+							<div class="col-sm-3">
+	                            <div class="form-group">
+	                            <div id="dropOutControl" class="col-sm-12 clearPaddingLeft">
+		                            <label for="dropOut" class="control-label">Mandatory</label>
+		                                <select name="dropOut" ng-model="search.mandatory" class="form-control">
+										<option value="">--Select--</option>
+										<option value="true">Yes</option>
+										<option value="false">No</option>
+									</select></div>
+	                            </div>
+	                    	</div>
+							
+						</div>
+					</div>	
+						
+                    
+                    <div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+						<div class="row">
+						
+							<div ng-controller="BracLocationController">
+								<braclocation row="3" name="brac"></braclocation>
+							</div>
+							
+							
+							<div class="col-sm-3">
+	                           <div class="form-group">
+	                            <label for="instituteId" class="control-label">Institute</label>
+	                            	<div id="instituteIdControl" class="col-sm-12 clearPaddingLeft">
+	                                <select name="instituteId" 
+	                                		ng-model="search.instituteId" 
+	                                		class="form-control"
+	                                		ng-disabled="instituteDisable"
+	                                		ng-change="onInstituteChange(search.instituteId)">
+	                                    <option value="">--Select--</option>
+	                                    <option ng-repeat="insList in instituteList" 
+	                                    		value="{{insList.id}}"> {{insList.name}} </option>
+	                                </select></div>
+	                            </div>
+	                    	</div>
+	                    </div>
+	                </div>
+	                    	
+					 <div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+						<div class="row">
+						
+							<div class="col-sm-3">
+	                            <div class="form-group">
+	                            	<label for="grade" class="control-label">Grade</label> 
+	                            		<div id="gradeControl" class="col-sm-12 clearPaddingLeft">
+	                                <select name="grade" ng-model="search.gradeId" class="form-control">
+	                                    <option value="">--Select--</option>
+	                                    <option ng-selected="search.gradeId == grdList.id" 
+	                                    		ng-repeat="grdList in gradeList" 
+	                                    		value="{{grdList.id}}"> {{grdList.name}} </option>
+	                                </select></div>
+	                            </div>
+					    	</div>
+					    	
+					    	<div class="col-sm-3">
+							
+								<div class="form-group" ng-class="{'has-error': FeeForm.amount.$invalid}">
+								<label for="amount" class="control-label">Amount</label>
+									<div id="amountControl" class="col-sm-12 clearPaddingLeft">
+									<input 
+										id="amount"
+										name="amount"
+										ng-pattern="{{validation.number}}"
+										type="text"
+										ng-minlength="0"
+										ng-maxlength="20" 
+										class="form-control"
+										ng-model="search.amount"></input></div>
+										
+									<span 	class="help-block error" ng-show="FeeForm.amount.$error.minlength"> 
+										minimum value can be 0 
+									</span> 
+									<span class="help-block error" ng-show="FeeForm.amount.$error.maxlength">
+									 	maximum value can be 10000000000000000000 
+									 </span>
+									<span 	class="help-block error" ng-show="FeeForm.amount.$error.pattern"> 
+										Only numeric value [0-9] and . are allowed 
+									</span> 
+								</div>
+							</div>
+					    	
+					    						
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div id="gradeControl" class="col-sm-12 clearPaddingLeft">
+								<label for="year" class="control-label">Year</label>
+									<input 
+										id="year"
+										readonly="readonly"
+										type="text"
+										class="form-control yearPicker"
+										ng-model="search.year"></input></div>
+								</div>
+							</div>
+					
+
+						</div>
+				</div>	
+									
+						<div class="col-sm-12">
+							<div class="form-group">
+								<a 	id="Search" 
+									name="Search" 
+									ng-disabled="FeeForm.$invalid"
+									class="btn btn-primary"
+									ng-click="searchButtonListener()"> Search</a> 
+									
+								<a	class="btn btn-default" 
+									style="cursor: pointer;"
+									data-toggle="collapse" 
+									data-parent="#accordion"
+									data-target="#collapseOne" ng-click="clearSearch()"> Cancel</a>
+							</div>	
+						</div>
+				 </form>
+				</div> 
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="search-results">
+	<div class="panel panel-default">
+	
+		<div class="panel-heading">Total Fee Setup: {{totalSize}}</div>
+
+		<div class="panel-body button-tooltip">
+			<div class="dataTable_wrapper">
+				<div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+					<div class="row">
+						<div class="col-sm-12">
+							<table 	id="dataTables-example"
+									class="table table-striped table-bordered table-hover dataTable no-footer table-condensed"
+									role="grid" 
+									aria-describedby="dataTables-example_info">
+								<thead>
+									<tr role="row">
+										<th>Fee Type</th>
+										<th>Institute</th>
+										<th>A/C Code</th>
+										<th>Grade</th>
+										<th>Category</th>
+										<th>Year</th>
+										<th>Amount</th>
+										<th>Mandatory</th>
+										
+										<th style="width: 82px; text-align: center;">
+											<ul class="pagination pull-right" style="margin: 0px; padding: 0px;">
+												<li ng-class="{disabled:currentPage == 0}">
+													<a id="prev" href ng-click="previous()"> 
+														<span class="fa  fa-caret-left "></span>
+													</a>
+												</li>
+												<li ng-class="{disabled: currentPage == (maxPage - 1)}">
+													<a id="next" href ng-click="next()"> 
+														<span class="fa  fa-caret-right"></span>
+													</a>
+												</li>
+											</ul>
+										</th>
+										
+									</tr>
+								</thead>
+								<tbody>
+									<tr role="row" ng-repeat="result in searchResults">
+										<td class="sorting_1">
+											<a href="#/Fee/edit/{{result.id}}">{{result.feeTypeName}}</a>
+										</td>
+
+										<td class="sorting_1">
+											<a href="#/Fee/edit/{{result.id}}">{{result.feeCategoryName}}</a>
+										</td>
+										
+										<td class="sorting_1">
+											<a href="#/Fee/edit/{{result.id}}">{{result.code}}</a>
+										</td>
+										
+										<td class="sorting_1">
+											<a href="#/Fee/edit/{{result.id}}">{{result.instituteId}}</a>
+										</td>
+										
+										<td class="sorting_1">
+											<a href="#/Fee/edit/{{result.id}}">{{result.gradeId}}</a>
+										</td>
+										<td class="sorting_1">{{result.year}}</td>
+										<td class="sorting_1">{{result.amount}}</td>
+										<td class="sorting_1">{{(result.mandatory  == "true") ? "Yes" : "No"}}</td>
+					
+										<td>
+											<a 	class="btn btn-success btn-circle" 
+												href="#/Fee/edit/{{result.id}}"
+												data-toggle="tooltip" 
+												onclick="closeToolTip()"
+												title="Edit">
+												<span class="fa fa-edit"></span>
+											</a> 
+											<a 	ng-show="result.id" ng-click="remove(result.feeTypeName, result.id)"
+												class="btn btn-danger btn-circle" 
+												data-toggle="tooltip" 
+												title="Delete"
+												onclick="closeToolTip()"
+												style="margin-left: 0px;">
+												<span class="fa fa-trash-o"></span>
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>					
+					<div ng-include="'views/Util/pagination.html'"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<script type="text/javascript">			
+$('.yearPicker').datepicker({
+	autoclose: true,
+    format: "yyyy",
+    startDate: "01/01/" + new Date().getFullYear(),
+    startView: 1,
+    minViewMode: 2,
+    keyboardNavigation: true,
+    forceParse: false,
+    todayHighlight: true,
+    orientation: "top auto",
+	minViewMode: 2
+});
+</script>
+<script src="scripts/controllers/bracLocation/bracLocationController.js"></script>

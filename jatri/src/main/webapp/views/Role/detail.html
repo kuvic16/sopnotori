@@ -1,0 +1,106 @@
+<div class="row" style="margin-top: 10px">
+	<div class="col-lg-12">
+		<form id="RoleForm" name="RoleForm" class="form-horizontal"
+			role="form">
+			<div class="panel panel-green">
+				<div class="panel-heading" ng-switch
+					on="$location.path().indexOf('/Role/new') > -1">
+					<div ng-switch-when="true">Create a new Role</div>
+					<div ng-switch-when="false">View or edit Role</div>
+				</div>
+				<div class="panel-body">
+					<div class="col-lg-4">
+						<div class="form-group"
+							ng-class="{'has-error': RoleForm.name.$invalid}">
+							<label for="name" class="control-label">Name</label>
+							<div id="nameControls" class="">
+								<input id="name" name="name" type="text" required
+									ng-maxlength="25" ng-minlength="1" class="form-control"
+									ng-model="role.name" placeholder="Enter the Role Name"></input>
+								
+									
+									<span
+									class="help-block error"
+									ng-show="RoleForm.name.$error.minlength">minimum length
+									is 1</span> <span class="help-block error"
+									ng-show="RoleForm.name.$error.maxlength">maximum length
+									is 25</span>
+							</div>
+						</div>
+
+						<div class="form-group"
+							ng-class="{'has-error': RoleForm.description.$invalid}">
+							<label for="description" class="control-label">Description</label>
+							<div id="descriptionControls" class="">
+								<input id="description" 
+									name="description" 
+									type="text" 
+									required
+									ng-maxlength="50" 
+									ng-minlength="1" 
+									class="form-control"
+									ng-model="role.description"
+									placeholder="Enter the Description"></input> 
+								
+								<span class="help-block error"
+									ng-show="RoleForm.description.$error.minlength">minimum
+									length is 1</span> <span class="help-block error"
+									ng-show="RoleForm.description.$error.maxlength">maximum
+									length is 50</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8">
+						<div>Total Right: <label for="description" class="control-label">{{rightList.length}}</label></div>
+						<div>
+							<button class="btn btn-outline btn-info btn-xs" style="margin-right: 10px" onclick="return false;" ng-click="checkAll()">
+								<span class="glyphicon glyphicon-ok-sign"></span> Check all
+							</button>
+							<button class="btn btn-outline btn-warning btn-xs" style="margin-right: 10px" onclick="return false;" ng-click="uncheckAll()">
+								<span class="glyphicon glyphicon-remove-sign"></span> Uncheck all
+							</button>
+						</div>
+						<label ng-repeat="right in rightList" style="margin-right: 15px; font-style: normal;"> 
+							<input type="checkbox" data-checklist-model="selectedRight.right" data-checklist-value="right" />
+							{{right.name}}
+						</label>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="form-group">
+						<div class="col-sm-10">
+							<button id="saveRole" name="saveRole" class="btn btn-primary"
+								ng-disabled="RoleForm.$invalid" ng-click="save()">
+								<span class="glyphicon glyphicon-ok-sign"></span> Save
+							</button>
+							<button id="cancel" name="cancel" class="btn btn-default" onclick="return false;"
+								ng-click="cancel()">
+								<span class="glyphicon glyphicon-remove-sign"></span> Cancel
+							</button>
+							<button id="deleteRole" name="deleteRole"
+								class="btn btn-danger" ng-show="role.id"
+								ng-click="remove(role.name + ' Role')">
+								<span class="glyphicon glyphicon-trash"></span> Delete
+							</button>
+						</div>
+					</div>
+					<div ng-show="displayError" class="alert alert-danger">
+						<strong>Error!</strong> Something broke. Retry, or cancel and
+						start afresh.
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+//===================================================
+// Prevent enterkey press action
+$("#RoleForm" ).keypress(function(event) {
+	if (event.which == 13 ) {
+			
+		     event.preventDefault(); 
+	  }
+});
+//===================================================
+</script>

@@ -1,0 +1,175 @@
+<style>
+
+</style>
+<h3 class="button-tooltip">
+	Financial Reports 
+	
+		
+	<a id="refresh" class="btn btn-success btn-circle"
+		style="float: right; margin-left: 5px;" data-placement="top"
+		data-toggle="tooltip" data-original-title="Refresh"
+		href="#/FinancialReport/" onclick="closeToolTip()"> <span
+		class="fa fa-refresh"></span>
+	</a>
+
+	<script>
+	    // tooltip initialize
+	    $(function () {
+		    $('.button-tooltip').tooltip({
+			    html: true,
+		        selector: "[data-toggle=tooltip]",
+		        container: "body"
+		    });
+	    });
+	
+	    function closeToolTip(){
+	    	$(".tooltip").remove();
+	    }
+    </script>
+
+</h3>
+
+<div class="form-horizontal">
+	<div class="panel-group" id="accordion">
+		<div class="panel panel-warning">
+			<div id="collapseOne">  <!-- class="panel-collapse collapse" -->
+				<div class="panel-body" style="padding-left: 0px; margin-left: 15px;">
+					<div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+						<div class="row">
+							<div ng-controller="BracLocationController">
+								<braclocation row="3" name="brac"></braclocation>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label for="headsOfAccountUdvId" class="control-label">Heads of accounts</label>
+									<div id="headsOfAccountUdvIdControls" class="col-sm-12 clearPaddingLeft">
+										<select name="headsOfAccountUdvId" ng-model="search.headsOfAccountUdvId"
+											ng-change="onHeadOfAccountChange(search.headsOfAccountUdvId)"
+											class="form-control input-sm">
+											<option value="">--Select head of account--</option>
+											<option ng-repeat="headOfAccount in headOfAccountList" value="{{headOfAccount.id}}">{{headOfAccount.value}}</option>
+										</select>
+									</div>
+								</div>
+							</div>							
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label for="expenditureTypeUdvId" class="control-label">Expenditure Type</label>
+									<div class="col-sm-12 clearPaddingLeft">
+										<select name="expenditureTypeUdvId" ng-model="search.expenditureTypeUdvId" class="form-control">
+											<option value="">--Select type--</option>
+											<option ng-repeat="udv in expenditureTypeList" value="{{udv.id}}">{{udv.value}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label for="month" class="control-label">Month</label>
+									<div id="monthControls" class="col-sm-12 clearPaddingLeft">
+										<select name="month" ng-model="search.month" class="form-control" >
+											<option value="">--Select Month--</option>
+											<option value="0">January</option>
+											<option value="1">February</option>
+											<option value="2">March</option>
+											<option value="3">April</option>
+											<option value="4">May</option>
+											<option value="5">June</option>
+											<option value="6">July</option>
+											<option value="7">August</option>
+											<option value="8">September</option>
+											<option value="9">October</option>
+											<option value="10">November</option>
+											<option value="11">December</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label for="year" class="control-label">Year</label>
+									<div id="yearControls" class="col-sm-12 clearPaddingLeft">
+										<input id="year" type="text"
+											readonly="readonly" class="form-control yearPicker"
+											ng-model="search.year" placeholder="Enter the Year"></input>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="form-group">								
+									<a  id="Search" 
+										class="btn btn-primary"
+										ng-disabled="FinancialForm.$invalid"
+										ng-click="searchButtonListener()">Generate Report</a>
+										 
+									<a	class="btn btn-default" style="cursor: pointer;"
+										ng-click="clearSearch()"> Clear</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="search-results">
+	<div class="panel panel-info" ng-if="columnNameList.length > 0">
+		
+		
+		<div class="panel-heading"><strong>Reports</strong></div>
+		
+		<div class="fixed-table-container" style="overflow-x:auto; margin-right: 5px;">
+		<div class="fixed-table-header" style="overflow-x:auto; margin-right: 5px;"></div>
+			<div class="fixed-table-body">
+				<table class="table table-striped table-bordered table-hover table-condensed">
+					<thead id="myHeader">
+						<tr class="success separator">
+							<th colspan="{{totalNumberOfColumn+1}}" class="text-center">Head of Account</th>	
+						</tr>
+						<tr class="separator">
+							<th colspan="{{udv.spanColumn+1}}" class="text-center" ng-repeat="udv in headOfAccountList">{{udv.value}}</th>	
+						</tr>
+						<tr>
+							<th>Branch</th>
+							<th ng-repeat="column in columnNameList">{{column.value}}</th>	
+						</tr>
+					</thead>
+					<tbody>
+						
+					
+							
+					<tr role="row" ng-repeat="row in searchResultsList">
+						<td ng-repeat="col in row track by $index" >  {{col}}</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+
+
+$('.yearPicker').datepicker({
+	autoclose: true,
+    format: "yyyy",
+    startDate: "01/01/" + new Date().getFullYear(),
+    startView: 1,
+    minViewMode: 2,
+    keyboardNavigation: true,
+    forceParse: false,
+    todayHighlight: true,
+    orientation: "top auto",
+	minViewMode: 2
+});
+</script>
+<script src="scripts/controllers/bracLocation/bracLocationController.js"></script>

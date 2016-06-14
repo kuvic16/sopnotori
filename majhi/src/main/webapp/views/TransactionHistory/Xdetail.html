@@ -1,0 +1,179 @@
+<div class="row" style="margin-top: 10px">
+    <div class="col-lg-12">
+        <form id="TransactionHistoryForm" name="TransactionHistoryForm" class="form-horizontal"
+              role="form">
+            <div class="panel panel-green">
+                <div class="panel-heading"
+                     ng-switch
+                     on="$location.path().indexOf('/TransactionHistory/new') > -1">
+
+                    <div ng-switch-when="true">Create a new Fee Collection</div>
+                    <div ng-switch-when="false">View or edit Fee Collection</div>
+                </div>
+                <div class="panel-body">
+                	<div class="col-xs-6 col-sm-3">
+                		<div class="form-group"
+							ng-class="{'has-error': TransactionHistoryForm.year.$invalid}">
+							<label for="year" class="control-label">Year</label>
+							<div id="yearControls" class="col-sm-12 clearPaddingLeft">
+								<input 
+									id="year"									
+									type="text"
+									required
+									readonly="readonly"
+									class="form-control yearPicker"
+									ng-model="transactionHistory.year"
+									placeholder="Enter the Year"> 
+								</input>								
+							</div>
+						</div>
+                	</div>
+                     <div class="col-xs-6 col-sm-3">
+						<div class="form-group"
+                             ng-class="{'has-error': TransactionHistoryForm.instituteId.$invalid}">
+                            <label for="instituteId" class="control-label">Institute</label>
+                            <div id="instituteIdControls" class="col-sm-12 clearPaddingLeft">
+                                <select name="instituteId" 
+                                		ng-model="transactionHistory.instituteId" 
+                                		required 
+                                		class="form-control"
+                                  		ng-change="getGradeList(transactionHistory.instituteId)">
+                                  		
+                                    <option value="">--Select Institute--</option>
+                                    <option ng-selected="transactionHistory.instituteId == inst.id" 
+                                    		ng-repeat="inst in instituteList" 
+                                    		value="{{inst.id}}"> {{inst.name}} </option>
+                                </select>
+                            </div>
+                    	</div>
+					</div>
+
+					<div class="col-xs-6 col-sm-3">			
+						<div class="form-group" ng-class="{'has-error': TransactionHistoryForm.gradeId.$invalid}">
+                            <label for="gradeId" class="control-label">Grade</label>
+                            <div id="gradeIdControls" class="col-sm-12 clearPaddingLeft">
+                                <select name="gradeId" 
+                                		ng-model="transactionHistory.gradeId" 
+                                		required 
+                                		class="form-control"
+                                 		ng-change="getStudentList(transactionHistory.instituteId, transactionHistory.gradeId)">
+                                    <option value="">--Select Grade--</option>
+                                    <option ng-selected="transactionHistory.gradeId == grade.id" 
+                                    		ng-repeat="grade in gradeList" 
+                                    		value="{{grade.id}}"> {{grade.name}} </option>
+                                </select>
+                            </div>
+					    </div> 
+					</div>
+					
+					<div class="col-xs-6 col-sm-3">
+						<div class="form-group" ng-class="{'has-error': TransactionHistoryForm.studentId.$invalid}">
+                            <label for="studentId" class="control-label">Student</label>
+                            <div id="studentIdControls" class="col-sm-12 clearPaddingLeft">
+                                <select name="studentId" 
+                                		ng-model="transactionHistory.studentId" 
+                                		required 
+                                		class="form-control"
+                                 		ng-change="getTransactionHistoryList(transactionHistory.studentId, transactionHistory.instituteId, transactionHistory.gradeId, transactionHistory.year)">
+                                    <option value="">--Select Student--</option>
+                                    <option ng-selected="transactionHistory.studentId == student.id" 
+                                    		ng-repeat="student in studentList" 
+                                    		value="{{student.id}}"> {{student.studentFirstName}} </option>
+                                </select>
+                            </div>
+					    </div>
+                    </div>
+                    
+                    <!-- ==================================================================================================== -->
+                    <div class="row" ng-if="transactionHistoryList.length > 0">
+                        <div class="col-sm-12">
+                            <table class="table table-striped table-bordered table-hover dataTable no-footer table-condensed">
+                                <thead>
+                                    <tr role="row">
+                                        <th>Fee Type</th>
+                                        <th style="width: 100px; text-align: right;">Amount</th>
+                                        <th style="width: 150px; text-align: right;">Deposit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" ng-repeat="transactionHistory in transactionHistoryList">
+                                        <td>{{transactionHistory.feeTypeName}}</td>
+                                        <td style="text-align: right;">{{transactionHistory.amount}}</td>
+                                        <td>
+                                        	<div class="input-group {{transactionHistory.status}}">
+											    <input type="number" min="0" max="{{transactionHistory.amount}}" class="form-control {{(transactionHistory.status === 'has-success')?'disable-color':''}}" style="text-align: right;" ng-model="transactionHistory.deposited"/>
+											</div>
+                                        </td>                                        
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                	<td></td>
+                                	<td style="text-align: right;">Total: {{totalAmount}}</td>
+                                	<td style="text-align: right;">To be paid: {{getToBePaid()}}</td>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel-footer">
+                    <div class="row" ng-if="transactionHistoryList.length > 0">
+                        <div class="col-sm-12" style="text-align: right;">
+                            <button id="saveTransactionHistory"
+                                    name="saveTransactionHistory"
+                                    class="btn btn-primary"
+                                    ng-disabled="isClean() || TransactionHistoryForm.$invalid"
+                                    ng-click="save()">
+                                <span class="glyphicon glyphicon-ok-sign">
+                                </span>
+                                Pay
+                            </button>
+
+                            <button id="cancel"
+                                    name="cancel"
+                                    class="btn btn-default"
+                                    onclick="return false;"
+                                    ng-click="cancel()">
+
+                                <span class="glyphicon glyphicon-remove-sign">
+                                </span>
+                                Cancel
+                            </button>
+
+                            <button id="deleteTransactionHistory"
+                                    name="deleteTransactionHistory"
+                                    class="btn btn-danger"
+                                    ng-show="TransactionHistory.id"
+                                    ng-click="remove(TransactionHistory.id)">
+                                <span class="glyphicon glyphicon-trash">
+                                </span>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+
+                    <div ng-show="displayError" class="alert alert-danger">
+                        <strong>Error!</strong> Something broke. Retry, or cancel and
+                        start afresh.
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $('.datePicker').datepicker({
+        autoclose: true,
+        format: "yyyy-mm-dd",
+        todayHighlight: true,
+        orientation: "top auto"
+    });
+
+    $('.yearPicker').datepicker({
+        autoclose: true,
+        format: "yyyy",
+        todayHighlight: true,
+        orientation: "top auto",
+        minViewMode: 2
+    });
+</script>

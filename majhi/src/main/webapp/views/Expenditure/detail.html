@@ -1,0 +1,145 @@
+<form id="ExpenditureForm" name="ExpenditureForm" class="form-horizontal" role="form">
+	<div class="panel panel-green">
+		<div class="panel-heading" ng-switch on="$location.path().indexOf('/Expenditure/new') > -1">
+			<div ng-switch-when="true">Create a new Expenditure</div>
+			<div ng-switch-when="false">View or edit Expenditure</div>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div ng-controller="BracLocationController">
+					<braclocation row="3" required="true" name="brac"></braclocation>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group" ng-class="{'has-error': ExpenditureForm.headsOfAccountUdvId.$invalid}">
+						<label for="headsOfAccountUdvId" class="control-label">Heads of accounts</label>
+						<div id="headsOfAccountUdvIdControls" class="col-sm-12 clearPaddingLeft">
+							<select id="headsOfAccountUdvId" name="headsOfAccountUdvId" required="required" ng-model="expenditure.headsOfAccountUdvId"
+								ng-change="onHeadOfAccountChange(expenditure.headsOfAccountUdvId)"
+								class="form-control input-sm">
+								<option value="">--Select head of account--</option>
+								<option ng-selected="expenditure.headsOfAccountUdvId == headOfAccount.id" ng-repeat="headOfAccount in headOfAccountList" value="{{headOfAccount.id}}">{{headOfAccount.value}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="form-group" ng-class="{'has-error': ExpenditureForm.expenditureTypeUdvId.$invalid}">
+						<label for="expenditureTypeUdvId" class="control-label">Expenditure Type</label>
+						<div class="col-sm-12 clearPaddingLeft">
+							<select id="expenditureTypeUdvId" name="expenditureTypeUdvId" required="required" ng-model="expenditure.expenditureTypeUdvId" class="form-control">
+								<option value="">--Select type--</option>
+								<option ng-selected="expenditure.expenditureTypeUdvId == udv.id" ng-repeat="udv in expenditureTypeList" value="{{udv.id}}">{{udv.value}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group" ng-class="{'has-error': ExpenditureForm.month.$invalid}">
+						<label for="month" class="control-label">Month</label>
+						<div id="monthControls" class="col-sm-12 clearPaddingLeft">
+							<select name="month" required="required" ng-model="expenditure.month" class="form-control">
+								<option value="">--Select Month--</option>
+								<option value="0">January</option>
+								<option value="1">February</option>
+								<option value="2">March</option>
+								<option value="3">April</option>
+								<option value="4">May</option>
+								<option value="5">June</option>
+								<option value="6">July</option>
+								<option value="7">August</option>
+								<option value="8">September</option>
+								<option value="9">October</option>
+								<option value="10">November</option>
+								<option value="11">December</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group" ng-class="{'has-error': ExpenditureForm.year.$invalid}">
+						<label for="year" class="control-label">Year</label>
+						<div id="yearControls" class="col-sm-12 clearPaddingLeft">
+							<input id="year" name="year" type="text" required="required" readonly="readonly" class="form-control yearPicker" ng-model="expenditure.year" placeholder="Enter the Year"></input>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="form-group" ng-class="{'has-error': ExpenditureForm.amount.$invalid}">
+						<label for="amount" class="control-label">Amount</label>
+						<div id="amountControls" class="col-sm-12 clearPaddingLeft">
+							<input type="number" name="amount" required="required" class="form-control" ng-model="expenditure.amount" placeholder="Enter the Amount"></input>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group" ng-class="{'has-error': ExpenditureForm.docName.$invalid}">
+						<label for="docName" class="control-label">Attachment</label>
+						<div id="docNameControls" class="col-sm-12 clearPaddingLeft">
+							<label for="attachFile" class="btn btn-default">Browse...</label>
+							<input id="attachFile" style="display: none;" type="file" file-model = "attachmentFile" onchange="angular.element(this).scope().fileUpload(this)" />
+							<a target="_blank" href="/files/{{expenditure.docName}}">{{expenditure.docName}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<div class="form-group">
+				<div class="col-sm-10">
+					<button id="saveExpenditure" name="saveExpenditure" class="btn btn-primary" ng-disabled="isClean() || ExpenditureForm.$invalid" ng-click="save()">
+						<span class="glyphicon glyphicon-ok-sign"></span> Save
+					</button>
+
+					<button id="cancel" name="cancel" class="btn btn-default" onclick="return false;" ng-click="cancel()">
+						<span class="glyphicon glyphicon-remove-sign"></span> Cancel
+					</button>
+
+					<button id="deleteExpenditure" name="deleteExpenditure" class="btn btn-danger" ng-show="expenditure.id" ng-click="remove('')">
+						<span class="glyphicon glyphicon-trash"></span> Delete
+					</button>
+				</div>
+			</div>
+
+			<div ng-show="displayError" class="alert alert-danger">
+				<strong>Error!</strong> Something broke. Retry or cancel and start fresh.
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+
+//======================================================================
+	// Prevent enterkey press action
+	$("#FeeForm" ).keypress(function(event) {
+		if (event.which == 13 ){
+			event.preventDefault(); 
+		}
+		  //console.log( "Handler for .keypress() called." );
+	});
+//=======================================================================
+
+$('.datePicker').datepicker({
+	autoclose: true,
+          format: "yyyy-mm-dd",
+          todayHighlight: true,
+          orientation: "top auto"
+});
+
+$('.yearPicker').datepicker({
+	autoclose: true,
+          format: "yyyy",
+          startDate: "01/01/" + new Date().getFullYear(),
+          startView: 1,
+          minViewMode: 2,
+          keyboardNavigation: true,
+          forceParse: false,
+          todayHighlight: true,
+          orientation: "top auto",
+	minViewMode: 2
+});
+</script>
+<script src="scripts/controllers/bracLocation/bracLocationController.js"></script>

@@ -1,0 +1,84 @@
+<div class="row" style="margin-top: 10px">
+	<div class="col-sm-12">
+		<form id="RightForm" name="RightForm" class="form-horizontal"
+			role="form">
+			<div class="panel panel-green">
+				<div class="panel-heading" ng-switch
+					on="$location.path().indexOf('/Rights/new') > -1">
+					<div ng-switch-when="true">Create a new Right</div>
+					<div ng-switch-when="false">View or edit Right</div>
+				</div>
+				<div class="panel-body">
+					<div class="col-sm-4">
+						<div class="form-group" ng-class="{'has-error': RightForm.name.$invalid}">
+							<label for="name" class="control-label">Name</label>
+							<div id="nameControls" class="">
+								<input id="name" name="name" type="text" required
+									ng-maxlength="75" ng-minlength="1" class="form-control"
+									ng-model="right.name" placeholder="Enter the Right Name"></input>
+								 
+								<span
+									class="help-block error"
+									ng-show="RightForm.name.$error.minlength">minimum length
+									is 1</span> 
+								<span class="help-block error"
+									ng-show="RightForm.name.$error.maxlength">maximum length
+									is 75</span>
+							</div>
+						</div>
+
+						<div class="form-group"
+							ng-class="{'has-error': RightForm.description.$invalid}">
+							<label for="description" class="control-label">Description</label>
+							<div id="descriptionControls" class="">
+								<input id="description" name="description" type="text" required
+									ng-maxlength="100" ng-minlength="1" class="form-control"
+									ng-model="right.description"
+									placeholder="Enter the description"></input> 
+								<span class="help-block error"
+									ng-show="RightForm.description.$error.minlength">minimum
+									length is 1</span> <span class="help-block error"
+									ng-show="RightForm.description.$error.maxlength">maximum
+									length is 100</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="form-group">
+						<div class="col-sm-10">
+							<button id="saveRight" name="saveRight" class="btn btn-primary"
+								ng-disabled="isClean() || RightForm.$invalid" ng-click="save()">
+								<span class="glyphicon glyphicon-ok-sign"></span> Save
+							</button>
+							<button id="cancel" name="cancel" class="btn btn-default" onclick="return false;"
+								ng-click="cancel()">
+								<span class="glyphicon glyphicon-remove-sign"></span> Cancel
+							</button>
+							<button id="deleteRight" name="deleteRight"
+								class="btn btn-danger" ng-show="right.id"
+								ng-click="remove(right.name + ' Right')">
+								<span class="glyphicon glyphicon-trash"></span> Delete
+							</button>
+						</div>
+					</div>
+					<div ng-show="displayError" class="alert alert-danger">
+						<strong>Error!</strong> Something broke. Retry, or cancel and
+						start afresh.
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+//===================================================
+// Prevent enterkey press action
+$("#RightForm" ).keypress(function(event) {
+	if (event.which == 13 ) {
+			
+		     event.preventDefault(); 
+	  }
+});
+//===================================================
+</script>

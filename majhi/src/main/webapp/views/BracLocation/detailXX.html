@@ -1,0 +1,58 @@
+<div class="col-md-{{row}}">
+	<div class="form-group">
+		<label for="locationDivisionId" class="control-label">Region</label>
+		<div id="locationDivisionIdControls"
+			class="col-sm-12 clearPaddingLeft">
+			<select name="locationDivisionId"
+				ng-model="location.selectedDivisionId" class="form-control"
+				ng-disabled="location.checkAbility('division')"
+				ng-change="location.getDistrictList(location.selectedDivisionId)">
+
+				<option value="NULL"
+					ng-selected="location.selectedDivisionId == 'NULL'">--Select
+					Region--</option>
+				<option ng-selected="location.selectedDivisionId == division.id"
+					ng-repeat="division in location.divisionList" class="a"
+					value="{{division.id}}">{{division.name}}</option>
+			</select>
+		</div>
+	</div>
+</div>
+
+
+<div class="col-md-{{row}}">
+	<div class="form-group">
+		<label for="locationDistrictId" class="control-label">Area</label>
+		<div id="locationDistrictIdControls"
+			class="col-sm-12 clearPaddingLeft">
+			<select name="location.locationDistrictId"
+				ng-model="location.selectedDistrictId"
+				ng-disabled="location.checkAbility('district')" class="form-control"
+				ng-change="location.onRegionChange(location.selectedDistrictId)">
+
+				<option value="">--Select Area--</option>
+				<option ng-selected="location.selectedDistrictId == district.id"
+					ng-repeat="district in location.districtList"
+					value="{{district.id}}">{{district.name}}</option>
+			</select>
+		</div>
+	</div>
+</div>
+
+
+<div class="col-md-{{row}}">
+	<div class="form-group">
+		<label for="locationUpazilaId" class="control-label">Branch</label>
+		<div id="locationUpazilaIdControls" class="col-sm-12 clearPaddingLeft">
+			<select name="locationUpazilaId"
+				ng-model="location.selectedUpazilaId" class="form-control"
+				ng-disabled="location.checkAbility('upazila')"
+				ng-change="location.getBranch()">
+
+				<option value="">--Select Branch--</option>
+				<option ng-selected="location.selectedUpazilaId == upazila.id"
+					ng-repeat="upazila in location.upazilaList" value="{{upazila.id}}">{{upazila.name}}</option>
+			</select>
+		</div>
+	</div>
+</div>

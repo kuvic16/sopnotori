@@ -1,0 +1,170 @@
+<div class="row" style="margin-top: 10px">
+	<div class="col-lg-12">
+		<form id="UdvForm" name="UdvForm" class="form-horizontal" role="form">
+			<div class="panel panel-green">
+				<div class="panel-heading" 
+					 ng-switch on="$location.path().indexOf('/Udv/new') > -1">
+					<div ng-switch-when="true">Create a new User Define Data</div>
+					<div ng-switch-when="false">View or edit  User Define Data</div>
+				</div>
+				<div class="panel-body">
+					<div class="col-lg-4">
+						<div class="form-group" ng-class="{'has-error': UdvForm.category.$invalid}">
+							<label for="category" class="control-label">Category</label>
+							<div id="categoryControls" class="">
+								<select name="category" 
+										ng-model="udv.category" 
+										required 
+										class="form-control input-sm">
+									<option value="">--Select Category--</option>
+									<option ng-selected="udv.category == category" 
+											ng-repeat="category in categoryList" 
+											value="{{category}}">
+											{{category}}
+									</option>
+								</select> 
+							</div>
+						</div>
+						
+						<div class="form-group" ng-class="{'has-error': UdvForm.parentCategory.$invalid}">
+							<label for="parentCategory" class="control-label">Parent Category</label>
+							<div id="parentCategoryControls" class="">
+								<select name="parentCategory" 
+										ng-model="udv.parentCategory" 
+										ng-change="categoryChange(udv.parentCategory)" 
+										class="form-control input-sm">
+									<option value="">--Select parent category--</option>
+									<option ng-selected="udv.parentCategory == category" 
+											ng-repeat="category in categoryList" 
+											value="{{category}}">
+											{{category}}
+									</option>
+								</select> 
+							</div>
+						</div>
+						
+						<div class="form-group" ng-show="parentUdvList.length">
+							<label for="parent" class="control-label">Parent value</label>
+							<div id="parentControls" class="">
+								<select name="parentId" ng-model="udv.parentId" class="form-control input-sm">
+									<option value="">--Select Parent--</option>
+									<option ng-selected="udv.parentId == parent.id" 
+											ng-repeat="parent in parentUdvList" 
+											value="{{parent.id}}">
+											{{parent.value}}
+									</option>
+								</select> 
+							</div>
+						</div>
+
+						<div class="form-group" ng-class="{'has-error': UdvForm.value.$invalid}">
+							<label for="value" class="control-label">Value</label>
+							<div id="valueControls" class="">
+								<input id="value" 
+									name="value" 
+									type="text" 
+									required
+									ng-maxlength="250" 
+									ng-minlength="1" 
+									class="form-control"
+									ng-model="udv.value" 
+									placeholder="Enter the value"></input>
+								<span class="help-block error" ng-show="UdvForm.value.$error.minlength">
+									minimum length is 1
+								</span> 
+								<span class="help-block error" ng-show="UdvForm.value.$error.maxlength">
+									maximum length is 250
+								</span>								
+							</div>
+						</div>
+						
+						<div class="form-group" ng-class="{'has-error': UdvForm.altValue.$invalid}">
+							<label for="altValue" class="control-label">Code</label>
+							<div id="altValueControls" class="">
+								<input id="altValue" 
+									name="altValue" 
+									type="text"
+									ng-maxlength="250" 
+									ng-minlength="0" 
+									class="form-control"
+									ng-model="udv.altValue" 
+									placeholder="Enter the Code"></input>								
+								<span class="help-block error" ng-show="UdvForm.altValue.$error.minlength">
+									minimum length is 0
+								</span> 
+								<span class="help-block error" ng-show="UdvForm.altValue.$error.maxlength">
+									maximum length is 250
+								</span>								
+							</div>
+						</div>
+						
+						<div class="form-group" ng-class="{'has-error': UdvForm.description.$invalid}">
+							<label for="description" class="control-label">Description</label>
+							<div id="descriptionControls" class="">
+								<textarea id="description" 
+									name="description"
+									ng-maxlength="500" 
+									ng-minlength="0" 
+									class="form-control"
+									ng-model="udv.description" 
+									placeholder="Enter the Description"></textarea>								
+								<span class="help-block error" ng-show="UdvForm.description.$error.minlength">
+									minimum length is 0
+								</span> 
+								<span class="help-block error" ng-show="UdvForm.description.$error.maxlength">
+									maximum length is 500
+								</span>								
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="form-group">
+						<div class="col-sm-10">
+						
+							<button id="saveUdv" 
+									name="saveUdv" 
+									class="btn btn-primary"
+									ng-disabled="isClean() || UdvForm.$invalid" 
+									ng-click="save()">
+								<span class="glyphicon glyphicon-ok-sign"></span> Save
+							</button>
+							
+							<button id="cancel" 
+									name="cancel" 
+									class="btn btn-default"
+									onclick="return false;" 
+									ng-click="cancel()">
+								<span class="glyphicon glyphicon-remove-sign"></span> Cancel
+							</button>
+							
+							<button id="deleteUdv" 
+									name="deleteUdv" 
+									class="btn btn-danger"
+									ng-show="udv.id" 
+									ng-click="remove(udv.category + ' User Define Data')">
+								<span class="glyphicon glyphicon-trash"></span> Delete
+							</button>
+							
+						</div>
+					</div>
+					<div ng-show="displayError" class="alert alert-danger">
+						<strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+//===================================================
+//Prevent enterkey press action
+$("#UdvForm" ).keypress(function(event) {
+	if (event.which == 13 ) {
+			
+		     event.preventDefault(); 
+	  }
+});
+//===================================================
+</script>

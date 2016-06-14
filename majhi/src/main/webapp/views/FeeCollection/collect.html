@@ -1,0 +1,311 @@
+<div class="row" style="margin-top: 10px">
+    <div class="col-lg-12">
+            <div class="panel panel-green">
+                <div class="panel-heading"
+                     ng-switch
+                     on="$location.path().indexOf('/FeeCollection/collect') > -1">
+
+                    <div ng-switch-when="true">Student Fee Collection</div>
+                </div>
+                
+                <form id="FeeSearchForm" name="FeeSearchForm" role="form" class="form-horizontal">
+	                <div class="panel-body">
+	                	<!-- Start First row -->
+	                	
+	                	<div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+								<div class="row">
+	                	
+									<div ng-controller="BracLocationController">
+										<braclocation row="3" name="brac"></braclocation>
+									</div>
+								
+							
+					               	 <div class="col-sm-3">
+										<div class="form-group" ng-class="{'has-error': FeeSearchForm.instituteId.$invalid}">
+					                           <label for="instituteId" class="control-label">Institute</label>
+					                           <div id="instituteIdControls" class="col-sm-12 clearPaddingLeft">
+					                               <select name="instituteId" 
+					                               		ng-model="studentFee.instituteId" 
+					                               		required="required"
+					                               		class="form-control"
+					                               		ng-change="onInstituteChange(studentFee.instituteId)">
+					                                 		
+					                                   <option value="">--Select Institute--</option>
+					                                   <option ng-selected="studentFee.instituteId == inst.id" 
+					                                   		ng-repeat="inst in instituteList" 
+					                                   		value="{{inst.id}}"> {{inst.name}} </option>
+					                               </select>
+					                           </div>
+					                   	</div>
+									</div>
+									
+							</div>
+						</div>
+						
+					<div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+						<div class="row">
+			
+							<div class="col-sm-3">			
+								<div class="form-group" ng-class="{'has-error': FeeSearchForm.gradeId.$invalid}">
+			                           <label for="gradeId" class="control-label">Grade</label>
+			                           <div id="gradeIdControls" class="col-sm-12 clearPaddingLeft">
+			                               <select name="gradeId" 
+			                               		ng-model="studentFee.gradeId" 
+			                               		ng-disabled="true"
+			                               		required="required"
+			                               		class="form-control"
+			                                	ng-change="getStudentList(studentFee.instituteId, studentFee.gradeId)">
+			                                   <option value="">--Select Grade--</option>
+			                                   <option ng-selected="studentFee.gradeId == grade.id" 
+			                                   		ng-repeat="grade in gradeList" 
+			                                   		value="{{grade.id}}"> {{grade.name}} </option>
+			                               </select>
+			                           </div>
+							    </div> 
+							</div>
+							
+							<div class="col-sm-3">
+									<div class="form-group" ng-class="{'has-error': FeeSearchForm.studentId.$invalid}">
+				                           <label for="studentId" class="control-label">Student</label>
+				                           <div id="studentIdControls" class="col-sm-12 clearPaddingLeft">
+				                               <select name="studentId" 
+				                               		ng-model="studentFee.studentId" 
+				                               		  required="required"
+				                               		class="form-control">
+				                                   <option value="">--Select Student--</option>
+				                                   <option ng-selected="studentFee.studentId == student.id" 
+				                                   		ng-repeat="student in studentList" 
+				                                   		value="{{student.id}}"> {{student.studentId}} - {{student.fullName}} </option>
+				                               </select>
+				                           </div>
+								    </div>
+			                 </div>
+	
+		                    <div class="col-sm-3">
+			                    <div class="form-group" ng-class="{'has-error': FeeSearchForm.studentFee.$invalid}">
+										<label for="month" class="control-label">Month</label>
+										<div id="monthControls" class="col-sm-12 clearPaddingLeft">
+											<select name="month" 
+													 required="required"
+													ng-model="studentFee.month" 
+													class="form-control"
+													ng-change="getStudentFeeList(studentFee.studentRoll, studentFee.studentId, studentFee.instituteId, studentFee.gradeId, studentFee.year,studentFee.month)">
+												<option value="">--Select Month--</option>
+												<option value="0">January</option>
+												<option value="1">February</option>
+												<option value="2">March</option>
+												<option value="3">April</option>
+												<option value="4">May</option>
+												<option value="5">June</option>
+												<option value="6">July</option>
+												<option value="7">August</option>
+												<option value="8">September</option>
+												<option value="9">October</option>
+												<option value="10">November</option>
+												<option value="11">December</option>
+											</select></div>
+									</div>
+								</div>
+						
+						 <div class="col-sm-3">
+		                		<div class="form-group" ng-class="{'has-error': FeeSearchForm.year.$invalid}">
+									<label for="year" class="control-label">Year</label>
+									<div id="yearControls" class="col-sm-12 clearPaddingLeft">
+										<input 
+											id="year"									
+											type="text"
+											required="required"
+											readonly="readonly"
+											class="form-control yearPicker"
+											ng-model="studentFee.year"
+											placeholder="Enter the Year"></input>								
+									</div>
+								</div>
+		                	</div>		
+						
+				</div>
+			</div>		
+						
+			<div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+						<div class="row">
+						
+								 <div class="col-sm-4">
+			                    	<div class="form-group">
+										<div>
+											<button id="search"
+				                                    name="search"
+				                                    class="btn btn-primary"
+				                                    ng-disabled="FeeSearchForm.$invalid"
+				                                    
+				                                    onclick="return false;"
+				                                    ng-click="getStudentFeeList(studentFee.studentRoll, studentFee.studentId, studentFee.instituteId, studentFee.gradeId, studentFee.year,studentFee.month)">
+				                                <span class="glyphicon glyphicon-search"></span>
+				                                Search
+				                            </button>
+				                            <button
+			                                   name="cancel"
+			                                   class="btn btn-default"
+			                                   onclick="return false;"
+			                                   ng-click="cancel()">		
+			                               		<span class="glyphicon glyphicon-step-backward"></span>Back
+			                           		</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+					
+                    <!-- ========================= Dynamic Content ======================================= -->
+                    <form id="FeeCollectionForm" name="FeeCollectionForm" class="form-horizontal"    role="form">
+                    <div class="row" > 
+                                   		
+                    	<div class="col-sm-6" ng-if="tableDataLoaded && studentFeeList.length == 0">
+                    		<div class="alert alert-success">
+                                Fee's Already paid till this month 
+                            </div>
+                    	</div>
+                    	
+                        <div class="col-sm-6" ng-if="studentFeeList.length > 0">
+                            <table class="table table-striped table-bordered table-hover dataTable no-footer table-condensed">
+                                <thead class="alert alert-success">
+                                    <tr role="row">
+                                        <th>Fee Type</th>
+                                        <th style="width: 65px; text-align: right;">Amount</th>
+                                        <th style="width: 65px; text-align: right;">Paid</th>
+                                        <th style="width: 65px; text-align: right;">Due</th>
+                                        <th style="width: 100px; text-align: right;">Pay</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" ng-repeat="studentFee in studentFeeList">
+                                        <td>{{studentFee.feeTypeName}}
+                                        	<span class="label label-info">{{(studentFee.feeCategoryName=="Monthly")? monthText[studentFee.month] : ""}}</span><br/>
+                                        	<span class="label label-warning" style="font-size: 9px">{{studentFee.feeCategoryName}}</span>
+                                        	<!-- <span style="font-size: 9px">Last pay: {{studentFee.collectionDate}}</span> -->
+                                        </td>
+                                        <td style="text-align: right;">{{studentFee.amount}}</td>
+                                        <td style="text-align: right;">{{studentFee.deposited}}</td>
+                                        <td style="text-align: right;">{{studentFee.due}}</td>
+                                        <td>
+                                        	<div class="input-group {{studentFee.status}}">
+											    <input 	type="number" 
+											    		min="0" 
+											    		max="{{studentFee.due}}" 
+											    		class="form-control {{(studentFee.status === 'has-success')?'disable-color':''}}" style="text-align: right;" 
+											    		ng-model="studentFee.pay"/>
+											    <br/>
+											    <span style="font-size: 9px">Last pay: {{studentFee.collectionDate}}</span>
+											</div>
+                                        </td>                                        
+                                    </tr>
+                                </tbody>
+                                <tfoot class="alert alert-warning">
+                                	<th>Total</th>
+                                	<th style="text-align: right;">{{getTotalAmount()}}</th>
+                                	<th style="text-align: right;">{{getTotalPaid()}}</th>
+                                	<th style="text-align: right;">{{getTotalDue()}}</th>
+                                	<th style="text-align: right;">{{getToBePaid()}}</th>
+                                </tfoot>
+                            </table>
+                            <div class="row" ng-if="studentFeeList.length > 0" style="padding-top: 10px; padding-bottom: 10px">
+		                       <div class="col-sm-12" style="text-align: right; padding-right: 0" >
+		                           <button id="saveStudentFee"
+		                                   name="saveStudentFee"
+		                                   class="btn btn-primary"
+		                                   ng-disabled="FeeCollectionForm.$invalid"
+		                                   ng-click="save()">
+		                               <span class="glyphicon glyphicon-ok-sign"></span>
+		                               Pay
+		                           </button>
+		
+		                           <button id="cancel"
+		                                   name="cancel"
+		                                   class="btn btn-default"
+		                                   onclick="return false;"
+		                                   ng-click="cancel()">
+		
+		                               <span class="glyphicon glyphicon-remove-sign"></span>
+		                               Cancel
+		                           </button>                            
+		                       </div>
+		                   </div>
+                        </div>
+                        
+                        
+                        <div class="col-sm-6"  ng-if="tableDataLoaded && transactionHistoryList.length == 0">
+                    		<div class="alert alert-info">
+                                No payment history till this month 
+                            </div>
+                    	</div>
+                    	
+                        <div class="table-responsive col-sm-6"  ng-if="transactionHistoryList.length > 0">
+                            <table class="table table-fixed table-striped table-bordered table-hover dataTable no-footer table-condensed" style="font-size: 11px;">
+                                <thead class="alert alert-success" style="height: 10px; font-size: 12px;">
+									<tr role="row">
+										<th style="width: 65px; text-align: left;">Month</th>
+										<th style="text-align: right; width: 78px;">Fee Type</th>
+										<th style="text-align: right; width: 76px;">Fee Category</th>
+										<th style="width: 65px; text-align: right;">Amount</th>
+										<th style="width: 65px; text-align: right;">Deposited</th>
+										<th style="width: 84px; text-align: center;">Collection Date</th>
+									</tr>
+								</thead>
+                                <tbody>
+                                    <tr role="row" ng-repeat="transactionHistory in transactionHistoryList">
+                                        <td>{{(transactionHistory.feeCategoryName=="Monthly")? monthText[transactionHistory.month] : ""}}</td>
+                                        <td style="text-align: right;">{{transactionHistory.feeTypeName}}</td>
+                                        <td style="text-align: right;">{{transactionHistory.feeCategoryName}}</td>
+                                        <td style="text-align: right;">{{transactionHistory.amount}}</td>
+                                        <td style="text-align: right;">{{transactionHistory.deposited}}</td>   
+                                        <td style="text-align: center;">{{transactionHistory.collectionDate}}</td>                                     
+                                    </tr>
+                                </tbody>
+                                <tfoot class="alert alert-warning" style="font-size: 12px; font-weight: bold;">
+                                	<td></td>
+                                        <td style="text-align: right;"></td>
+                                        <td style="text-align: right;"></td>
+                                        <td style="text-align: right;">{{getTotaAmountInTransactionHistory()}}</td>
+                                        <td style="text-align: right;">{{getTotaDepositedAmountInTransactionHistory()}}</td>   
+                                        <td style="text-align: center;"></td> 
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                 </form>
+                    <!-- ========================= End of Dynamic Content ================================= -->
+                    
+                </div> 
+                <!-- End of panel Div -->
+                <div class="panel-footer">
+                    <div ng-show="displayError" class="alert alert-danger">
+                        <strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+                    </div>
+                </div>
+            
+        
+    </div>
+</div>
+<script type="text/javascript">
+    $('.datePicker').datepicker({
+        autoclose: true,
+        format: "yyyy-mm-dd",
+        todayHighlight: true,
+        orientation: "top auto"
+    });
+
+    $('.yearPicker').datepicker({
+    	autoclose: true,
+        format: "yyyy",
+        startDate: "01/01/" + new Date().getFullYear(),
+        startView: 1,
+        minViewMode: 2,
+        keyboardNavigation: true,
+        forceParse: false,
+        todayHighlight: true,
+        orientation: "top auto",
+    	minViewMode: 2
+    });
+</script>
+<script src="scripts/controllers/bracLocation/bracLocationController.js"></script>

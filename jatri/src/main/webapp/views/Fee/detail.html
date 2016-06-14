@@ -1,0 +1,236 @@
+<form id="FeeForm" name="FeeForm" class="form-horizontal" role="form">
+	<div class="panel panel-green">
+		<div class="panel-heading" ng-switch
+			on="$location.path().indexOf('/Fee/new') > -1">
+
+			<div ng-switch-when="true">Create a new Fee</div>
+			<div ng-switch-when="false">View or edit Fee</div>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div ng-controller="BracLocationController">
+					<braclocation row="4" required="true" name="brac"></braclocation>
+				</div>						
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group" ng-class="{'has-error': FeeForm.instituteId.$invalid}">
+						<label for="instituteId" class="control-label">Institute</label>
+						<div id="instituteIdControls" class="col-sm-12 clearPaddingLeft">
+							<select name="instituteId" ng-model="fee.instituteId"
+								required class="form-control" ng-disabled="instituteDisable"
+								ng-change="onInstituteChange(fee.instituteId)">
+								<option value="">--Select--</option>
+								<option ng-selected="fee.instituteId == institute.id"
+									ng-repeat="institute in instituteList"
+									value="{{institute.id}}">{{institute.name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group" ng-class="{'has-error': FeeForm.gradeId.$invalid}">
+						<label for="gradeId" class="control-label">Grade</label>
+						<div id="gradeIdControls" class="col-sm-12 clearPaddingLeft">
+							<select name="gradeId" ng-model="fee.gradeId" required
+								data-placement="top"
+								data-toggle="tooltip" 
+								
+								onclick="closeToolTip()"
+								class="form-control">
+								<option value="">--Select--</option>
+								<option ng-selected="fee.gradeId == grdList.id"
+									ng-repeat="grdList in gradeList" value="{{grdList.id}}">
+									{{grdList.name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group"	ng-class="{'has-error': FeeForm.year.$invalid}">
+						<label for="year" class="control-label">Year</label>
+						<div id="yearControls" class="col-sm-12 clearPaddingLeft">
+							<input id="year" 
+									name="year" 
+									readonly="readonly" 
+									type="text" 
+									required
+									class="form-control yearPicker" 
+									ng-model="fee.year"></input>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group" ng-class="{'has-error': FeeForm.feeTypeUdvId.$invalid}">
+						<label for="feeTypeUdvId" class="control-label">Fee Type</label>
+						<div id="feeTypeUdvIdControls" class="col-sm-12 clearPaddingLeft">
+							<select name="feeTypeUdvId" 
+									ng-model="fee.feeTypeUdvId" required class="form-control"
+									ng-change="getFeeTypeUdvDetails(fee.feeTypeUdvId)">
+								<option value="">--Select--</option>
+								<option ng-selected="fee.feeTypeUdvId == udv.id"
+									
+									ng-repeat="udv in udvList | filter:udv.category='Fee type'"
+									value="{{udv.id}}">{{udv.value}}</option>
+							</select>
+						</div>
+					</div>						
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group" ng-class="{'has-error': FeeForm.feeCategoryUdvId.$invalid}">
+						<label for="feeCategoryUdvId" class="control-label">Fee Category</label>
+						<div id="feeCategoryUdvIdControls"
+							class="col-sm-12 clearPaddingLeft">
+							<select name="feeCategoryUdvId"
+								ng-model="fee.feeCategoryUdvId" required class="form-control">
+								<option value="">--Select--</option>
+								<option ng-selected="fee.feeCategoryUdvId == udv.id"
+									ng-repeat="udv in udvList | filter:udv.category='Fee category'"
+									value="{{udv.id}}">{{udv.value}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group" ng-class="{'has-error': FeeForm.code.$invalid}">
+						<label for="code" class="control-label">A/C Code</label>
+						<div id="codeControls" class="col-sm-12 clearPaddingLeft">
+							<input id="code" 
+									name="code"
+									type="text" 
+									ng-maxlength="20" 
+									ng-minlength="0"
+									class="form-control codePicker" 
+									ng-model="fee.code"
+									ng-disabled="true"> 
+							<span class="help-block error" ng-show="FeeForm.code.$error.minlength"> 
+									minimum code length can be 0 </span> 
+							<span class="help-block error" ng-show="FeeForm.code.$error.maxlength"> 
+									maximum code length can be 20 </span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group" ng-class="{'has-error': FeeForm.amount.$invalid}">
+						<label for="amount" class="control-label">Amount</label>
+						<div id="amountControls" class="col-sm-12 clearPaddingLeft">
+							<input id="amount"
+								name="amount" 
+								type="text" 
+								class="form-control" 
+								required="required"
+								ng-pattern="{{validation.number}}"
+								ng-minlength="0"
+								ng-maxlength="20" 
+								ng-model="fee.amount"></input> 
+						<span 	class="help-block error" ng-show="FeeForm.amount.$error.minlength"> 
+							minimum value can be 0 
+						</span> 
+						<span class="help-block error" ng-show="FeeForm.amount.$error.maxlength">
+						 	maximum value can be 10000000000000000000 
+						 </span>
+						 
+						 <span 	class="help-block error" ng-show="FeeForm.amount.$error.pattern"> 
+							Only numeric value [0-9] and . are allowed 
+						</span> 
+						
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group" ng-class="{'has-error': FeeForm.mandatory.$invalid}">
+						<label for="mandatory" class="control-label">Mandatory</label>
+						<div id="mandatoryControls" class="col-sm-12 clearPaddingLeft">
+							<label style="margin-right: 15px; font-style: normal; font-weight: 100;">
+								<input type="radio" name="mandatory" required="required" value=true ng-model="fee.mandatory"> Yes
+							</label>
+							<label style="margin-right: 15px; font-style: normal; font-weight: 100;">
+								<input type="radio" name="mandatory" required="required" value=false ng-model="fee.mandatory"> No
+							</label>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel-footer">
+			<div class="form-group">
+				<div class="col-sm-10">
+					<button id="saveFee" name="saveFee" class="btn btn-primary"
+						ng-disabled="isClean() || FeeForm.$invalid" ng-click="save()">
+						<span class="glyphicon glyphicon-ok-sign"></span> Save
+					</button>
+
+					<button id="cancel" name="cancel" class="btn btn-default"
+						onclick="return false;" ng-click="cancel()">
+						<span class="glyphicon glyphicon-remove-sign"></span> Cancel
+					</button>
+
+					<button id="deleteFee" name="deleteFee" class="btn btn-danger"
+						ng-show="fee.id" ng-click="remove(feeTypeName)">
+						<span class="glyphicon glyphicon-trash"></span> Delete
+					</button>
+				</div>
+			</div>
+
+			<div ng-show="displayError" class="alert alert-danger">
+				<strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+			</div>
+		</div>
+
+	</div>
+</form>
+<script type="text/javascript">
+
+//======================================================================
+	// Prevent enterkey press action
+	$("#FeeForm" ).keypress(function(event) {
+		if (event.which == 13 ) {
+				
+			     event.preventDefault(); 
+		  }
+});
+//=======================================================================
+//$('#gradeId').tooltip();
+
+// tooltip initialize
+$(function () {
+    $('.button-tooltip').tooltip({
+	    html: true,
+        selector: "[data-toggle=tooltip]",
+        container: "body"
+    });
+});
+
+function closeToolTip(){
+	$(".tooltip").remove();
+}
+	
+			$('.datePicker').datepicker({
+				autoclose: true,
+	            format: "yyyy-mm-dd",
+	            todayHighlight: true,
+	            orientation: "top auto"
+			});
+			
+			$('.yearPicker').datepicker({
+				autoclose: true,
+	            format: "yyyy",
+	            startDate: "01/01/" + new Date().getFullYear(),
+	            startView: 1,
+	            minViewMode: 2,
+	            keyboardNavigation: true,
+	            forceParse: false,
+	            todayHighlight: true,
+	            orientation: "top auto",
+				minViewMode: 2
+			});
+</script>
+<script src="scripts/controllers/bracLocation/bracLocationController.js"></script>

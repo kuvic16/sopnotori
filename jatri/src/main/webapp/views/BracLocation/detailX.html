@@ -1,0 +1,34 @@
+<div class="form-group">
+	<label for="locationDivisionId" class="control-label">Division</label>
+	<div id="locationDivisionIdControls" class="col-sm-12 clearPaddingLeft">
+		<select name="locationDivisionId" ng-model="location.selectedDivisionId" class="form-control"
+			ng-change="location.getDistrictList(location.selectedDivisionId)">
+			<option value="">--Select Division--</option>
+			<option ng-selected="location.selectedDivisionId == division.id"
+				ng-repeat="division in location.divisionList"
+				value="{{division.id}}">{{division.name}}</option>
+		</select>
+	</div>
+</div>
+
+<div class="form-group">
+	<label for="locationDistrictId" class="control-label">District</label>
+	<div id="locationDistrictIdControls" class="col-sm-12 clearPaddingLeft">
+		<select name="location.locationDistrictId" ng-model="location.selectedDistrictId"
+			class="form-control" ng-change="location.getUpazilaList(location.selectedDistrictId)">
+			<option value="">--Select District--</option>
+			<option ng-selected="location.selectedDistrictId == district.id" ng-repeat="district in location.districtList" value="{{district.id}}">{{district.name}}</option>
+		</select>
+	</div>
+</div>
+
+<div class="form-group">
+	<label for="locationUpazilaId" class="control-label">Upazila</label>
+	<div id="locationUpazilaIdControls" class="col-sm-12 clearPaddingLeft">
+		<select name="locationUpazilaId" ng-model="location.selectedUpazilaId" class="form-control">
+			<option value="">--Select Upazila--</option>
+			<option ng-selected="location.selectedUpazilaId == upazila.id"
+				ng-repeat="upazila in location.upazilaList" value="{{upazila.id}}">{{upazila.name}}</option>
+		</select>
+	</div>
+</div>

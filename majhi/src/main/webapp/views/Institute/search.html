@@ -1,0 +1,394 @@
+<div style="padding: 5px">
+<h3 class="button-tooltip">
+Institutes 
+	<span	data-toggle="collapse" 
+			data-target="#collapseOne"
+			data-parent="#accordion"> 
+			
+		<a	style="cursor: pointer; float: right; margin-left: 5px;"
+			data-toggle="tooltip" 
+			data-placement="top"
+			data-original-title="Advanced Search" 
+			class="btn btn-info btn-circle">
+			<span class="fa fa-search"></span>
+		</a>
+	</span>
+	 
+		<a	id="new" 
+			class="btn btn-primary btn-circle"
+			style="float: right; margin-left: 5px;" 
+			data-placement="top"
+			data-toggle="tooltip" 
+			data-original-title="Create New Institute"
+			onclick="closeToolTip()" 
+			href="#/Institute/new">
+			<span class="fa fa-plus"></span> </a> 
+		
+		<a id="refresh"
+			class="btn btn-success btn-circle"
+			style="float: right; margin-left: 5px;" 
+			data-placement="top"
+			data-toggle="tooltip" 
+			data-original-title="Refresh"
+			href="#/Institute/" 
+			onclick="closeToolTip()"> 
+			<span class="fa fa-refresh"></span>
+		</a> 
+		
+	<!-- 	<a id="download" 
+			class="btn btn-warning btn-circle"
+			style="float: right; margin-left: 5px;" 
+			data-placement="top"
+			data-toggle="tooltip" 
+			data-original-title="Export" 
+			href="#">
+			<span class="fa fa-download"></span>
+		 </a> -->
+		 
+	<script>
+	    // tooltip initialize
+	    $(function () {
+		    $('.button-tooltip').tooltip({
+			    html: true,
+		        selector: "[data-toggle=tooltip]",
+		        container: "body"
+		    });
+	    });
+	
+	    function closeToolTip(){
+	    	$(".tooltip").remove();
+	    }
+    </script>
+</h3>
+<div class="form-horizontal">
+	<div class="panel-group" id="accordion">
+		<div class="panel panel-warning" style="border-color: transparent;">
+			<div id="collapseOne" class="panel-collapse collapse">
+				<div class="panel-body" style="padding-left: 0px">
+					<form id="InstituteForm" name="InstituteForm" class="form-horizontal">
+					
+					
+						 <div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+							<div class="row">
+															
+									<div ng-controller="BracLocationController">
+										<braclocation row="3" name="brac"></braclocation>
+									</div>
+									
+									
+									
+							<div class="col-sm-3">
+								<div class="form-group">
+								<label for="poId" class="control-label">Program Organizer</label>
+									<div id="poIdControls" class="col-sm-12 clearPaddingLeft">
+									<select name="poId" ng-model="search.poId" ng-disabled="programOrganizerDisable" class="form-control">
+										<option value="">--Select Program Organizer--</option>
+										<option ng-repeat="po in userList" 
+												value="{{po.id}}">
+												{{po.username}}
+										</option>
+									</select></div>
+							  	</div>
+                        	</div>		
+									
+							<!-- <div class="col-sm-3">
+								<div class="form-group">
+	                            <label for="instituteTypeUdv" class="control-label">Institute Type</label>
+	                            	<div id="instituteTypeUdvControls" class="col-sm-12 clearPaddingLeft">
+	                                <select name="instituteType" ng-model="search.instituteTypeUdvId" class="form-control">
+	                                    <option value="">--Select Institute Type--</option>
+	                                    <option ng-repeat="udv in udvList | filter:udv.category='Institute type'" 
+	                                    		value="{{udv.id}}"> {{udv.value}} </option>
+	                                </select></div>
+	                           	</div>
+                        	</div>
+						 -->
+							<!-- <div class="col-sm-3">				
+								<div class="form-group"  ng-class="{'has-error': InstituteForm.name.$invalid}">
+									<label for="name" class="control-label">Name</label> 
+										<div id="nameControls" class="col-sm-12 clearPaddingLeft">
+									<input 	id="name" 
+											name="name" 
+											class="form-control" 
+											type="text"
+											 ng-maxlength="50"
+                                       		ng-minlength="0"
+											ng-model="search.name" 
+											></input></div>
+							    <span class="help-block error" ng-show="InstituteForm.name.$error.minlength">
+                                    minimum length is 0
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.name.$error.maxlength">
+                                    maximum length is 50
+                                </span>
+								</div>
+							</div> -->
+							
+							</div>
+						</div>
+						
+						
+						 <div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+							<div class="row">
+							
+							
+							<div class="col-sm-3">				
+								<div class="form-group"  ng-class="{'has-error': InstituteForm.name.$invalid}">
+									<label for="name" class="control-label">Name</label> 
+										<div id="nameControls" class="col-sm-12 clearPaddingLeft">
+									<input 	id="name" 
+											name="name" 
+											class="form-control" 
+											type="text"
+											 ng-maxlength="50"
+                                       		ng-minlength="0"
+											ng-model="search.name"></input></div>
+							    <span class="help-block error" ng-show="InstituteForm.name.$error.minlength">
+                                    minimum length is 0
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.name.$error.maxlength">
+                                    maximum length is 50
+                                </span>
+								</div>
+							</div>
+							
+							
+							<div class="col-sm-3">
+								<div class="form-group" ng-class="{'has-error': InstituteForm.code.$invalid}">
+									<label for="code" class="control-label">Code</label> 
+									<div id="scaleControls" class="col-sm-12 clearPaddingLeft">
+									<input 	id="code" 
+											name="code" 
+											ng-maxlength="20"
+                                       		ng-minlength="0"
+											class="form-control" 
+											type="text"
+											ng-model="search.code"></input></div>
+								<span class="help-block error" ng-show="InstituteForm.code.$error.minlength">
+                                    minimum length is 0
+                                </span>
+                                <span class="help-block error" ng-show="InstituteForm.code.$error.maxlength">
+                                    maximum length is 20
+                                </span>
+								</div>
+							</div>
+							
+							                        	
+                        	<div class="col-sm-3">
+								<div class="form-group">
+								<label for="educationType" class="control-label">Education Type</label>
+									<div id="educationTypeControls" class="col-sm-12 clearPaddingLeft">
+									<select name="educationType" ng-model="search.educationTypeId" class="form-control">
+										<option value="">--Select Education Type--</option>
+										<option ng-repeat="educationType in educationTypeList" 
+												value="{{educationType.id}}">
+												{{educationType.name}}
+										</option>
+									</select></div>
+							  	</div>
+                        	</div>
+                        	
+                        	
+                        	<div class="col-sm-3">
+								<div class="form-group">
+	                            <label for="instituteTypeUdv" class="control-label">Institute Type</label>
+	                            	<div id="instituteTypeUdvControls" class="col-sm-12 clearPaddingLeft">
+	                                <select name="instituteType" ng-model="search.instituteTypeUdvId" class="form-control">
+	                                    <option value="">--Select Institute Type--</option>
+	                                    <option ng-repeat="udv in udvList | filter:udv.category='Institute type'" 
+	                                    		value="{{udv.id}}"> {{udv.value}} </option>
+	                                </select></div>
+	                           	</div>
+                        	</div>
+						
+                        	
+                        	<!-- <div class="col-sm-3">
+								<div class="form-group">
+								<label for="poId" class="control-label">Program Organizer</label>
+									<div id="poIdControls" class="col-sm-12 clearPaddingLeft">
+									<select name="poId" ng-model="search.poId" class="form-control">
+										<option value="">--Select Program Organizer--</option>
+										<option ng-repeat="po in userList" 
+												value="{{po.id}}">
+												{{po.username}}
+										</option>
+									</select></div>
+							  	</div>
+                        	</div> -->
+                        	
+                        	
+                    </div>
+                </div>
+                        
+                 <div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+							<div class="row">
+							
+							<div class="col-sm-3">        
+								<div class="form-group">
+	                            <label for="locationTypeUdvId" class="control-label">Location Type</label>
+	                            	<div id="locationTypeUdvIdControls" class="col-sm-12 clearPaddingLeft">
+	                                <select name="category" ng-model="search.locationTypeUdvId" class="form-control">
+	                                    <option value="">--Select Location Type--</option>
+	                                    <option ng-repeat="udv in udvList | filter:udv.category='Location type'" 
+	                                    		value="{{udv.id}}">{{udv.value}}
+	                                    </option>
+	                                </select></div>
+	                            </div>
+	                        </div>
+	                        
+	                     
+	                        
+	                       <div class="col-sm-3">
+								<div class="form-group">
+								 <label for="projectCodeUdvId" class="control-label">Project Code</label>
+								 	<div id="projectCodeUdvIdControls" class="col-sm-12 clearPaddingLeft">
+									<select name="projectCodeUdvId" ng-model="search.projectCodeUdvId"
+										class="form-control">
+										<option value="">--Select Project--</option>
+										<option ng-repeat="udv in udvList | filter:udv.category='Project code'" 
+												value="{{udv.id}}">
+												{{udv.value}}
+										</option>
+									</select></div>
+								</div>
+							</div>
+
+					</div>
+				</div>
+	
+		
+						
+						<div class="col-sm-12">
+							<div class="form-group">
+								<a 	id="Search" 
+									name="Search" 
+									ng-disabled="InstituteForm.$invalid"
+									class="btn btn-primary"
+									ng-click="searchButtonListener()"> Search</a>
+									 
+								<a	class="btn btn-default" 
+									style="cursor: pointer;"
+									data-toggle="collapse" 
+									data-parent="#accordion"
+									data-target="#collapseOne" 
+									ng-click="clearSearch()"> Cancel</a>
+							</div>
+						</div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="search-results">
+	<div class="panel panel-default">
+		<div class="panel-heading">Total Institute: {{totalSize}}</div>
+		
+		<div class="panel-body button-tooltip">
+			<div class="dataTable_wrapper">
+				<div id="dataTables-example_wrapper"
+					class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+					<div class="row">
+						<div class="col-sm-12">
+							<table 
+								id="dataTables-example"
+								class="table table-sm table-striped table-bordered table-hover dataTable no-footer table-condensed"
+								role="grid" 
+								aria-describedby="dataTables-example_info"
+								style="font-size: 10px">
+								<thead>
+									<tr role="row">
+										<th>Name</th>
+										<th>Code</th>
+										<th>Education Type</th>
+										<th>Session Start</th>
+										<th>Session End</th>
+										<th>Program Organizer</th>
+										<th>Total Student</th>
+										
+										<th style="width: 82px; text-align: center;">
+											<ul class="pagination pull-right"
+												style="margin: 0px; padding: 0px;">
+												<li ng-class="{disabled:currentPage == 0}">
+													<a id="prev" ng-click="previous()"> 
+														<span class="fa  fa-caret-left "></span>
+													</a>
+												</li>
+												<li ng-class="{disabled: currentPage == (maxPage - 1)}">
+													<a id="next" href ng-click="next()"> 
+														<span class="fa  fa-caret-right"></span>
+													</a>
+												</li>
+											</ul>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr role="row" ng-repeat="result in searchResults">
+										<td class="sorting_1">
+											<a	href="#/Institute/edit/{{result.id}}">{{result.name}}</a>
+										</td>
+
+										<td  class="sorting_1">
+											<a	href="#/Institute/edit/{{result.id}}">{{result.code}}</a>
+										</td>
+										
+										<td  class="sorting_1">
+											<div ng-show="result.educationTypeName.length > 0" ng-repeat="name in result.educationTypeName.split(',')">
+												<p style="margin: 0;" >
+													{{name}}
+												</p>
+												
+											</div>
+											
+										</td>
+										
+										<td  class="sorting_1">
+											<a	href="#/Institute/edit/{{result.id}}">{{result.sessionStart}}</a>
+										</td>
+										
+										<td  class="sorting_1">
+											<a	href="#/Institute/edit/{{result.id}}">{{result.sessionEnd}}</a>
+										</td>
+										
+										<td  class="sorting_1">
+											<a	href="#/Institute/edit/{{result.id}}">{{result.poId}}</a>
+										</td>
+										
+										<td  class="sorting_1">
+											<a	href="#/Institute/edit/{{result.id}}">{{result.totalStudent}}</a>
+										</td>
+										
+										<td>
+											<a	class="btn btn-success btn-circle" 
+												href="#/Institute/edit/{{result.id}}"
+												data-toggle="tooltip"
+												onclick="closeToolTip()" 
+												title="Edit">
+												<span class="fa fa-edit"></span>
+											</a> 
+											<a 	ng-show="result.id" 
+												data-toggle="tooltip" 
+												onclick="closeToolTip()"
+												title="Delete"
+												ng-click="remove(result.name, result.id)" 
+												class="btn btn-danger btn-circle" 
+												style="margin-left: 0px;">
+												<span class="fa fa-trash-o"></span>
+											</a>
+										</td>
+										
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div ng-include="'views/Util/pagination.html'"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<script src="scripts/controllers/bracLocation/bracLocationController.js"></script>

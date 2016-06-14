@@ -1,0 +1,205 @@
+<div class="row" style="margin-top: 10px">
+    <div class="col-lg-12">
+        <form id="StudentActivityForm" name="StudentActivityForm" class="form-horizontal" role="form">
+            <div class="panel panel-green">
+                <div class="panel-heading"
+                     ng-switch
+                     on="$location.path().indexOf('/StudentActivity/new') > -1">
+
+                    <div ng-switch-when="true">Create a new Student Activity</div>
+                    <div ng-switch-when="false">View or edit Student Activity</div>
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-4">
+
+                        <div class="form-group"
+                             ng-class="{'has-error': StudentActivityForm.activityTypeUdvId.$invalid}">
+                            <label for="activityTypeUdvId" class="control-label">Student Activity Type</label>
+                            <div id="activityTypeUdvId" class="">
+                                <select name="activityTypeUdvId" ng-model="studentActivity.activityTypeUdvId" required class="form-control">
+                                    <option value="">--Select Student Activity Type--</option>
+                                    <option ng-repeat="udv in udvList | filter:udv.category='Student activity type'" value="{{udv.id}}"> {{udv.value}} </option>
+                                </select>
+                            </div>
+                        </div>
+
+						<div class="form-group"
+                             ng-class="{'has-error': StudentActivityForm.instituteId.$invalid}">
+                            <label for="instituteId" class="control-label">Institute Type</label>
+                            <div id="instituteIdControls" class="clearPaddingLeft">
+                                <select name="instituteType" ng-model="studentActivity.instituteId" required class="form-control">
+                                    <option value="">--Select Institute Type--</option>
+                                    <option ng-selected="studentActivity.instituteId == insList.id" 
+                                    		ng-repeat="insList in instituteList" 
+                                    		value="{{insList.id}}"> {{insList.name}} </option>
+                                </select>
+                            </div>
+                    	</div>
+                    	
+                        <!-- <div class="form-group" ng-class="{'has-error': StudentActivityForm.instituteId.$invalid}">
+                            <label for="instituteId" class="control-label">Institute Id</label>
+                            <div id="instituteIdControls" class="">
+                                <input id="instituteId"
+                                          
+                                          required
+                                          ng-maxlength="100"
+                                          ng-minlength="1"
+                                          class="form-control"
+                                          type="text"
+                                          ng-model="studentActivity.instituteId"
+                                          placeholder="Enter the InstituteId"></input>
+                               
+                                <span class="help-block error"
+                                      ng-show="StudentActivityForm.instituteId.$error.minlength">
+                                    minimum
+                                    length is 1
+                                </span>
+                                <span class="help-block error"
+                                      ng-show="StudentActivityForm.instituteId.$error.maxlength">
+                                    maximum
+                                    length is 100
+                                </span>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group" ng-class="{'has-error': StudentActivityForm.result.$invalid}">
+                            <label for="instituteId" class="control-label">result</label>
+                            <div id="resultControls" class="">
+                                <input id="result"
+                                      
+                                       ng-maxlength="20"
+                                       ng-minlength="0"
+                                       class="form-control"
+                                       type="text"
+                                       ng-model="studentActivity.result"
+                                       placeholder="Enter the result"></input>
+                                <span class="help-block error"
+                                      ng-show="StudentActivityForm.result.$error.minlength">
+                                    minimum
+                                    length is 0
+                                </span>
+                                <span class="help-block error"
+                                      ng-show="StudentActivityForm.result.$error.maxlength">
+                                    maximum
+                                    length is 20
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{'has-error': StudentActivity.startTime.$invalid}">
+                            <label for="startTime" class="control-label">Start Time</label>
+                            <div id="startTimeControls" class="">
+                                <input id="startTime"
+                                       
+                                       type="text"
+                                       ng-maxlength="20"
+                                       ng-minlength="0"
+                                       class="form-control datePicker"
+                                       ng-model="studentActivity.startTime"
+                                       placeholder="Enter the Start Time">
+                                </input>
+                                <span class="help-block error"
+                                      ng-show="StudentActivity.startTime.$error.minlength">
+                                    minimum
+                                    length is 0
+                                </span>
+                                <span class="help-block error"
+                                      ng-show="StudentActivity.startTime.$error.maxlength">
+                                    maximum
+                                    length is 20
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group"
+                             ng-class="{'has-error': StudentActivity.endTime.$invalid}">
+                            <label for="endTime" class="control-label">End Time</label>
+                            <div id="endTimeControls" class="">
+                                <input id="endTime"
+                                      
+                                       type="text"
+                                       ng-maxlength="20"
+                                       ng-minlength="0"
+                                       class="form-control datePicker"
+                                       ng-model="studentActivity.endTime"
+                                       placeholder="Enter the End Time">
+                                </input>
+                                <span class="help-block error"
+                                      ng-show="StudentActivity.endTime.$error.minlength">
+                                    minimum
+                                    length is 0
+                                </span>
+                                <span class="help-block error"
+                                      ng-show="StudentActivity.endTime.$error.maxlength">
+                                    maximum
+                                    length is 20
+                                </span>
+                            </div>
+                        </div>
+                                  
+
+                        <!-- ==================================================================================================== -->
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <button id="saveStudentActivity"
+                                    name="saveStudentActivity"
+                                    class="btn btn-primary"
+                                    ng-disabled="isClean() || StudentActivityForm.$invalid"
+                                    ng-click="save()">
+                                <span class="glyphicon glyphicon-ok-sign">
+                                </span>
+                                Save
+                            </button>
+
+                            <button id="cancel"
+                                    name="cancel"
+                                    class="btn btn-default"
+                                    onclick="return false;"
+                                    ng-click="cancel()">
+
+                                <span class="glyphicon glyphicon-remove-sign">
+                                </span>
+                                Cancel
+                            </button>
+
+                            <button id="deleteStudentActivity"
+                                    name="deleteStudentActivity"
+                                    class="btn btn-danger"
+                                    ng-show="StudentActivity.id"
+                                    ng-click="remove(StudentActivity.id)">
+                                <span class="glyphicon glyphicon-trash">
+                                </span>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+
+                    <div ng-show="displayError" class="alert alert-danger">
+                        <strong>Error!</strong> Something broke. Retry, or cancel and
+                        start afresh.
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $('.datePicker').datepicker({
+        autoclose: true,
+        format: "yyyy-mm-dd",
+        todayHighlight: true,
+        orientation: "top auto"
+    });
+
+    $('.yearPicker').datepicker({
+        autoclose: true,
+        format: "yyyy",
+        todayHighlight: true,
+        orientation: "top auto",
+        minViewMode: 2
+    });
+</script>

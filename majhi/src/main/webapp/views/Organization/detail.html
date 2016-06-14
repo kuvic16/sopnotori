@@ -1,0 +1,371 @@
+<div class="row" style="margin-top: 10px">
+	<div class="col-lg-12">
+		<form id="OrganizationForm" name="OrganizationForm" class="form-horizontal" role="form">
+			<div class="panel panel-green">
+				<div class="panel-heading" ng-switch
+					on="$location.path().indexOf('/Organization/new') > -1">
+					<div ng-switch-when="true">Create a new Organization</div>
+					<div ng-switch-when="false">View or edit Organization</div>
+				</div>
+				<div class="panel-body">
+					<div class="col-xs-6 col-sm-3">					
+						<div class="form-group" ng-class="{'has-error': OrganizationForm.name.$invalid}">
+							<label for="name" class="control-label">Name</label>
+							<div id="nameControls" class="col-sm-12 clearPaddingLeft">
+								<input 	id="name" 
+										name="name" 
+										type="text" 
+										required="required"
+										ng-maxlength="50" 
+										ng-minlength="1" 
+										class="form-control"
+										ng-model="organization.name" 
+										placeholder="Enter the Organization Name"></input>
+								<span class="help-block error" 	ng-show="OrganizationForm.name.$error.minlength">
+									minimum 1 character!
+								</span> 
+								<span class="help-block error"  ng-show="OrganizationForm.name.$error.maxlength">
+									maximum 50 characters can contains!
+								</span>
+							</div>
+						</div>
+						<div class="form-group" ng-class="{'has-error': OrganizationForm.code.$invalid}">
+							<label for="code" class="control-label">Code</label>
+							<div id="codeControls" class="col-sm-12 clearPaddingLeft">
+								<input 	id="code" 
+										name="code" 
+										type="text" 
+										required
+										ng-maxlength="20" 
+										ng-minlength="1" 
+										class="form-control"
+										ng-model="organization.code"
+										placeholder="Enter the code"></input>
+								<span class="help-block error" ng-show="OrganizationForm.code.$error.minlength">
+									minimum 1 character!
+								</span> 
+								<span class="help-block error" ng-show="OrganizationForm.code.$error.maxlength">
+									maximum 20 characters can contains!
+								</span>
+							</div>
+						</div>
+						<div class="form-group" ng-class="{'has-error': OrganizationForm.address.$invalid}">
+							<label for="address" class="control-label">Address</label>
+							<div id="addressControls" class="col-sm-12 clearPaddingLeft">
+								<textarea 	id="address" 
+											name="address" 
+											type="text"
+											ng-maxlength="500" 
+											ng-minlength="0" 
+											class="form-control"
+											ng-model="organization.address"
+											placeholder="Enter Address"></textarea> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.address.$error.minlength">
+									minimum 0 character!
+								</span> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.address.$error.maxlength">
+									maximum 500 characters can contains!
+								</span>
+							</div>
+						</div>
+					
+					</div>
+					<div class="col-xs-6 col-sm-3">
+						<div class="form-group" ng-class="{'has-error': OrganizationForm.registrationStatus.$invalid}">
+							<label for="registrationStatus" class="control-label">Registration Status</label>
+							<div id="registrationStatusControls" class="col-sm-12 clearPaddingLeft">
+								<input 	id="registrationStatus" 
+										name="registrationStatus" 
+										type="text"
+										ng-maxlength="50" 
+										ng-minlength="0" 
+										class="form-control"
+										ng-model="organization.registrationStatus"
+										placeholder="Enter the Registration Status"></input> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.registrationStatus.$error.minlength">
+									minimum 1 character!
+								</span> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.registrationStatus.$error.maxlength">
+									maximum 50 characters can contains!
+								</span>
+							</div>
+						</div>
+						<div class="form-group" ng-class="{'has-error': OrganizationForm.yearlyBudget.$invalid}">
+							<label for="yearlyBudget" class="control-label">Yearly Budget</label>
+							<div id="yearlyBudgetControls" class="col-sm-12 clearPaddingLeft">
+								<input 	id="yearlyBudget" 
+										name="yearlyBudget" 
+										type="text"
+										ng-maxlength="150" 
+										ng-minlength="0" 
+										class="form-control"
+										ng-model="organization.yearlyBudget"
+										placeholder="Enter the Yearly Budget"></input> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.yearlyBudget.$error.minlength">
+									minimum 0 character!
+								</span> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.yearlyBudget.$error.maxlength">
+									maximum 150 characters can contains!
+								</span>
+							</div>
+						</div>
+						
+						<div class="form-group" ng-class="{'has-error': OrganizationForm.contactNumbers.$invalid}">
+							<label for="contactNumbers" class="control-label">Contact Numbers</label>
+							<div id="contactNumbersControls" class="col-sm-12 clearPaddingLeft">
+								<textarea 	id="contactNumbers" 
+											name="contactNumbers" 
+											type="text"
+											ng-maxlength="500" 
+											ng-minlength="0"
+											 
+											ng-pattern="{{validation.phoneNumber}}"
+											class="form-control"
+											ng-model="organization.contactNumbers"
+											placeholder="Enter the Contact Numbers"></textarea>
+									
+								<span class="help-block error" ng-show="OrganizationForm.contactNumbers.$error.minlength">
+									minimum 0 character!
+								</span> 
+								<span class="help-block error" ng-show="OrganizationForm.contactNumbers.$error.pattern">
+									Only number[0-9] , and - space are allowed.
+								</span> 
+								<span class="help-block error" ng-show="OrganizationForm.contactNumbers.$error.maxlength">
+									maximum 500 characters can contains!
+								</span>
+							</div>
+						</div>
+						
+					</div>
+					<div class="col-xs-6 col-sm-3">
+						<div class="form-group" ng-class="{'has-error': OrganizationForm.involvementStatusWithBrac.$invalid}">
+							<label for="involvementStatusWithBrac" class="control-label">Involvement Status With BRAC</label>
+							<div id="involvementStatusWithBracControls" class="col-sm-12 clearPaddingLeft">
+								<input 	id="involvementStatusWithBrac" 
+										name="involvementStatusWithBrac" 
+										type="text"
+										ng-maxlength="150" 
+										ng-minlength="0" 
+										class="form-control"
+										ng-model="organization.involvementStatusWithBrac"
+										placeholder="Enter the Involvement Status With Brac"></input> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.involvementStatusWithBrac.$error.minlength">
+									minimum 0 character!
+								</span> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.involvementStatusWithBrac.$error.maxlength">
+									maximum 150 characters can contains!
+								</span>
+							</div>
+						</div>
+						
+						<div class="form-group"	ng-class="{'has-error': OrganizationForm.yearOfEstablishment.$invalid}">
+							<label for="yearOfEstablishment" class="control-label">Year of Establishment</label>
+							<div id="yearOfEstablishmentControls" class="col-sm-12 clearPaddingLeft">
+								<input 	id="yearOfEstablishment" 
+										name="yearOfEstablishment" 
+										type="text"
+										ng-maxlength="50" 
+										ng-minlength="0" 
+										class="form-control"
+										ng-model="organization.yearOfEstablishment"
+										placeholder="Enter the Year of Establishment"></input> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.yearOfEstablishment.$error.minlength">
+									minimum 0 character!
+								</span> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.yearOfEstablishment.$error.maxlength">
+									maximum 50 characters can contains!
+								</span>
+							</div>
+						</div>
+						
+						<div class="form-group" ng-class="{'has-error': OrganizationForm.governingBoardMembersName.$invalid}">
+							<label for="governingBoardMembersName" class="control-label">Governing Board Members Name</label>
+							<div id="governingBoardMembersNameControls" class="col-sm-12 clearPaddingLeft">
+								<textarea 	id="governingBoardMembersName" 
+											name="governingBoardMembersName" 
+											type="text"
+											ng-maxlength="500" 
+											ng-minlength="0" 
+											class="form-control"
+											ng-model="organization.governingBoardMembersName"
+											placeholder="Enter Organization Head"></textarea> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.governingBoardMembersName.$error.minlength">
+									minimum 0 character!
+								</span> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.governingBoardMembersName.$error.maxlength">
+									maximum length is 500
+								</span>
+							</div>
+						</div>
+					
+					</div>
+					<div class="col-xs-6 col-sm-3">	
+							
+						<div class="form-group" ng-class="{'has-error': OrganizationForm.emailId.$invalid}">
+							<label for="emailId" class="control-label">Email</label>
+							<div id="emailIdControls" class="col-sm-12 clearPaddingLeft">
+								<input 	id="emailId" 
+										name="emailId" 
+										type="email"
+										ng-maxlength="150" 
+										ng-minlength="0" 
+										class="form-control"
+										ng-model="organization.emailId"
+										placeholder="Enter Email Id"></input> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.emailId.$error.minlength">
+									minimum 0 character!
+								</span> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.emailId.$error.maxlength">
+									maximum 150 characters can contains!
+								</span>
+							</div>
+						</div>
+						
+						<div class="form-group"	ng-class="{'has-error': OrganizationForm.numberOfGoverningBoardMembers.$invalid}">
+							<label for="numberOfGoverningBoardMembers" class="control-label" style="text-align:left; font-size: 12px;">Number of Governing Board Members</label>
+							<div id="numberOfGoverningBoardMembersControls" class="col-sm-12 clearPaddingLeft">
+								<input 	id="numberOfGoverningBoardMembers" 
+										name="numberOfGoverningBoardMembers" 
+										type="text"
+										ng-maxlength="150" 
+										ng-minlength="0" 
+										ng-pattern="{{validation.phoneNumber}}"
+										class="form-control"
+										ng-model="organization.numberOfGoverningBoardMembers"
+										placeholder="Enter Number of Governing Board Member"></input> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.numberOfGoverningBoardMembers.$error.minlength">
+									minimum 0 character!
+								</span> 
+								<span class="help-block error" ng-show="OrganizationForm.numberOfGoverningBoardMembers.$error.pattern">
+									Only number[0-9] , and - space are allowed.
+								</span> 	
+								<span class="help-block error" ng-show="OrganizationForm.numberOfGoverningBoardMembers.$error.maxlength">
+									maximum 150 characters can contains!
+								</span>
+							</div>
+						</div>
+						
+						<div class="form-group" ng-class="{'has-error': OrganizationForm.yearlyStaffAllocation.$invalid}">
+							<label for="yearlyStaffAllocation" class="control-label">Yearly Staff Allocation</label>
+							<div id="yearlyStaffAllocationControls" class="col-sm-12 clearPaddingLeft">
+								<input	id="yearlyStaffAllocation" 
+										name="yearlyStaffAllocation" 
+										type="text"
+										ng-maxlength="150" 
+										ng-minlength="0" 
+										class="form-control"
+										ng-model="organization.yearlyStaffAllocation"
+										placeholder="Enter the Yearly Staff Allocation"></input> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.yearlyStaffAllocation.$error.minlength">
+									minimum 0 character!
+								</span> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.yearlyStaffAllocation.$error.maxlength">
+									maximum 150 characters can contains!
+								</span>
+							</div>
+						</div>
+						
+						<div class="form-group" ng-class="{'has-error': OrganizationForm.organizationHead.$invalid}">
+							<label for="organizationHead" class="control-label">Organization Head</label>
+							<div id="organizationHeadControls" class="col-sm-12 clearPaddingLeft">
+								<textarea	id="organizationHead" 
+											name="organizationHead" 
+											type="text"
+											ng-maxlength="500" 
+											ng-minlength="0" 
+											class="form-control"
+											ng-model="organization.organizationHead"
+											placeholder="Enter Organization Head"></textarea> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.organizationHead.$error.minlength">
+									minimum 0 character!
+								</span> 
+									
+								<span class="help-block error" ng-show="OrganizationForm.organizationHead.$error.maxlength">
+									maximum 500 characters can contains!
+								</span>
+							</div>
+						</div>
+					
+					</div>
+			</div>
+				<div class="panel-footer">
+					<div class="form-group">
+						<div class="col-sm-10">
+							<button id="saveOrganization" 
+									name="saveOrganization" 
+									class="btn btn-primary"
+									ng-disabled="isClean() || OrganizationForm.$invalid" 
+									ng-click="save()">
+								<span class="glyphicon glyphicon-ok-sign"></span> Save
+							</button>
+							<button id="cancel" 
+									name="cancel" 
+									class="btn btn-default" 
+									onclick="return false;"
+									ng-click="cancel()">
+								<span class="glyphicon glyphicon-remove-sign"></span> Cancel
+							</button>
+							<button id="deleteOrganization" 
+									name="deleteOrganization"
+									class="btn btn-danger" 
+									ng-show="organization.id"
+									ng-click="remove(organization.name)">
+								<span class="glyphicon glyphicon-trash"></span> Delete
+							</button>
+						</div>
+					</div>
+					<div ng-show="displayError" class="alert alert-danger">
+						<strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<<script type="text/javascript">
+<!--
+
+//-->
+//======================================================================
+//Prevent enterkey press action
+$("#OrganizationForm" ).keypress(function(event) {
+	if (event.which == 13 ) {
+			/* $("#dropOutReason")
+			{
+				return true;	
+			} */
+	
+			$("#dropOutReason").keyup(function(event){
+			    if(event.which == 13){
+			    	//console.log( "Dropdown for .keypress() called." );
+			        return true;
+			    }
+			});
+			 //console.log( "Handler for .keypress() called." );
+		     event.preventDefault();
+			 
+	  }
+	  //console.log( "Handler for .keypress() called." );
+});
+//=======================================================================
+
+</script>
