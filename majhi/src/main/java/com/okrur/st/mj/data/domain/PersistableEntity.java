@@ -17,7 +17,7 @@ public abstract class PersistableEntity implements Serializable{
 	
 	@Id
 	@GeneratedValue(generator = "uids")
-	@GenericGenerator(name = "uids", strategy = "net.brac.bep.util.IdGenerator", parameters = { @Parameter(name = "uuid_gen_strategy_class",  value = "com.brac.ehealth.util.IdGenerator") })
+	@GenericGenerator(name = "uids", strategy = "com.okrur.st.mj.util.IdGenerator", parameters = { @Parameter(name = "uuid_gen_strategy_class",  value = "com.brac.ehealth.util.IdGenerator") })
 	@Column(name = "id", nullable = false, length = 100, unique = true)
 	private String id;
 

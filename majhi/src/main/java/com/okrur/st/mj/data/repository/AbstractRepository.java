@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 public class AbstractRepository<T> {
-	@PersistenceContext(unitName = "emisPU")
+	@PersistenceContext(unitName = "majhiPU")
 	public EntityManager entityManager;
 	
 //	@PersistenceContext(unitName = "remote_brachub")
