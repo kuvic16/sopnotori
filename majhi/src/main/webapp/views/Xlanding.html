@@ -1,0 +1,139 @@
+<!-- <div id="page-wrapper"> -->
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header" style="margin-top: 1px">Dashboard</h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-3 col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-3">
+							<i class="fa fa-institution  fa-5x"></i>
+						</div>
+						<div class="col-xs-9 text-right">
+							<div class="huge">{{stats.totalInstitute}}</div>
+							<div>Total School</div>
+						</div>
+					</div>
+				</div>
+				<a href="#">
+					<div class="panel-footer">
+						<span class="pull-left">View Details</span> <span
+							class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+						<div class="clearfix"></div>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="col-lg-3 col-md-6">
+			<div class="panel panel-green">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-3">
+							<i class="fa fa-users fa-5x"></i>
+						</div>
+						<div class="col-xs-9 text-right">
+							<div class="huge">{{stats.totalStudent}}</div>
+							<div>Total Students</div>
+						</div>
+					</div>
+				</div>
+				<a href="#">
+					<div class="panel-footer">
+						<span class="pull-left">View Details</span> <span
+							class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+						<div class="clearfix"></div>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="col-lg-3 col-md-6">
+			<div class="panel panel-yellow">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-3">
+							<i class="fa fa-female fa-5x"></i>
+						</div>
+						<div class="col-xs-9 text-right">
+							<div class="huge">{{stats.totalFemaleStudent}}</div>
+							<div>Female Students</div>
+						</div>
+					</div>
+				</div>
+				<a href="#">
+					<div class="panel-footer">
+						<span class="pull-left">View Details</span> <span
+							class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+						<div class="clearfix"></div>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="col-lg-3 col-md-6">
+			<div class="panel panel-red">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-3">
+							<i class="fa fa-sign-out  fa-5x"></i>
+						</div>
+						<div class="col-xs-9 text-right">
+							<div class="huge">{{stats.totalDroppedStudent}}</div>
+							<div>Total Dropped</div>
+						</div>
+					</div>
+				</div>
+				<a href="#">
+					<div class="panel-footer">
+						<span class="pull-left">View Details</span> <span
+							class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+						<div class="clearfix"></div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-money fa-fw"></i> Fee Collection					
+				</div>
+				<!-- /.panel-heading -->
+				<div class="panel-body" style="padding: 0px">
+					<div id="container">
+						<canvas id="canvas"></canvas>
+					</div>				
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel -->
+			</div>
+		<!-- /.col-lg-8 -->
+		<div class="col-lg-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-bell fa-fw"></i> Notifications Panel
+				</div>
+				<!-- /.panel-heading -->
+				<div class="panel-body">
+					<div class="list-group">
+						<a href="#" class="list-group-item" ng-repeat="activity in activities"> 
+							<i class="fa fa-money fa-fw"></i> {{activity.expenditureTypeName}} <span class="pull-right text-muted small"><em>{{activity.amount}}</em></span>
+						</a> 
+					</div>
+					<!-- /.list-group -->
+					<a href="#" class="btn btn-default btn-block">View All Alerts</a>
+				</div>
+				<!-- /.panel-body -->
+			</div>
+			<!-- /.panel .chat-panel -->
+		</div>
+		<!-- /.col-lg-4 -->
+	</div>
+	<!-- /.row -->
+<!-- </div> -->
